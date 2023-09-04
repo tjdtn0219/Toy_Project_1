@@ -111,7 +111,7 @@ public class ConsoleView {
     public void showTripInformation(TripDTO tripDTO) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String result = String.format(
-                "\n[여행기록 조회결과]\n" +
+                "\n[여행기록정보 조회결과]\n" +
                 "여행 ID: %s \n" +
                 "여행 이름: %s\n" +
                 "여행 출발날짜: %s\n" +
@@ -128,7 +128,7 @@ public class ConsoleView {
     public void showItinerariesInformation(ItinerariesDTO intItinerariesDTO) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd / hh:mm:ss");
         String result = String.format(
-                "\n[여정기록 조회결과]\n" +
+                "\n[여정기록정보 조회결과]\n" +
                         "여정 ID: %s \n" +
                         "여정 출발지: %s\n" +
                         "여정 도착지: %s\n" +
