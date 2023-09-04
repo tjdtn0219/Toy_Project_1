@@ -1,5 +1,7 @@
 package org.view;
 
+import org.dto.ItinerariesDTO;
+import org.dto.ItinerariesDTO;
 import org.dto.TripDTO;
 
 import java.text.ParseException;
@@ -30,7 +32,7 @@ public class ConsoleView {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         TripDTO tripDTO = new TripDTO();
 
-        System.out.println("여행 정보를 입력하세요.");
+        System.out.println("기록할 여행 정보를 입력하세요.");
               /* 여행 Id는 따로 생성해야 합니다. */
         System.out.print("여행 이름을 입력하세요: ");
         tripDTO.setTripName(scanner.nextLine());
@@ -50,6 +52,54 @@ public class ConsoleView {
         }
 
         return tripDTO;
+    }
+
+    public ItinerariesDTO writeItinerariesInformation() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        ItinerariesDTO itinerariesDTO = new ItinerariesDTO();
+
+        System.out.println("기록할 여정 정보를 입력하세요.");
+              /* 여정 Id는 따로 생성해야 합니다. */
+        System.out.print("여정 출발지를 입력하세요: ");
+        itinerariesDTO.setDeparturePlace(scanner.nextLine());
+        System.out.print("여정 도착지를 입력하세요: ");
+        itinerariesDTO.setDestination(scanner.nextLine());
+        System.out.print("여정 시작시간을 입력하세요: ");
+        try {
+            Date departureTime = dateFormat.parse(scanner.nextLine());
+            itinerariesDTO.setDepartureTime(departureTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("여정 도착시간을 입력하세요: ");
+        try {
+            Date arrivalTime = dateFormat.parse(scanner.nextLine());
+            itinerariesDTO.setArrivalTime(arrivalTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("여정 체크인 시간을 입력하세요: ");
+        try {
+            Date checkInTime = dateFormat.parse(scanner.nextLine());
+            itinerariesDTO.setCheckInTime(checkInTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("여정 체크아웃 시간을 입력하세요: ");
+        try {
+            Date checkOutTime = dateFormat.parse(scanner.nextLine());
+            itinerariesDTO.setCheckInTime(checkOutTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return itinerariesDTO;
+    }
+
+    // 나중에 예외처리 필요!!
+    public boolean checkWriteContinue() {
+        String input = scanner.nextLine();
+        return "Y".equals(input);
     }
 
     private void displayMenu() {
