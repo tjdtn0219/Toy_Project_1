@@ -102,6 +102,12 @@ public class ConsoleView {
         return "Y".equals(input);
     }
 
+    // 찾고 싶은 여정이 속해있는 여행의 Id를 이용해서 여행을 조회
+    public String receiveFindTripId() {
+        System.out.print("찾고 싶은 여정의 여행 Id를 입력하세요: ");
+        return scanner.nextLine();
+    }
+
     private void displayMenu() {
         StringBuilder mainMenu = new StringBuilder();
         mainMenu.append("---------------------------------------------------------------\n")
