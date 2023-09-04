@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Itineraries {
+public class ItinerariesDTO {
 
     // id
     private int itineraryId;

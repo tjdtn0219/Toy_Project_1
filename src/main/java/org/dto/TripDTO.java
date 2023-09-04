@@ -25,6 +25,6 @@ public class TripDTO {
     private Date endDate;
 
     // 여정(Itineraries) 객체 배열
-    private Itineraries[] itineraries;
+    private ItinerariesDTO[] itineraries;
 
 }
