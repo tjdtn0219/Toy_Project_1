@@ -1,5 +1,10 @@
 package org.view;
 
+import org.dto.TripDTO;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,6 +24,32 @@ public class ConsoleView {
                 return Integer.parseInt(input);
             }
         }
+    }
+
+    public TripDTO writeTripInformation() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        TripDTO tripDTO = new TripDTO();
+
+        System.out.println("여행 정보를 입력하세요.");
+              /* 여행 Id는 따로 생성해야 합니다. */
+        System.out.print("여행 이름을 입력하세요: ");
+        tripDTO.setTripName(scanner.nextLine());
+        System.out.print("여행 시작시간을 입력하세요: ");
+        try {
+            Date startDate = dateFormat.parse(scanner.nextLine());
+            tripDTO.setStartDate(startDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("여행 종료시간을 입력하세요: ");
+        try {
+            Date endDate = dateFormat.parse(scanner.nextLine());
+            tripDTO.setEndDate(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return tripDTO;
     }
 
     private void displayMenu() {
