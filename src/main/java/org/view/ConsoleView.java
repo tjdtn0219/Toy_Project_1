@@ -36,14 +36,14 @@ public class ConsoleView {
               /* 여행 Id는 따로 생성해야 합니다. */
         System.out.print("여행 이름을 입력하세요: ");
         tripDTO.setTripName(scanner.nextLine());
-        System.out.print("여행 시작시간을 입력하세요: ");
+        System.out.print("여행 시작날짜을 입력하세요: ");
         try {
             Date startDate = dateFormat.parse(scanner.nextLine());
             tripDTO.setStartDate(startDate);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        System.out.print("여행 종료시간을 입력하세요: ");
+        System.out.print("여행 종료날짜을 입력하세요: ");
         try {
             Date endDate = dateFormat.parse(scanner.nextLine());
             tripDTO.setEndDate(endDate);
@@ -106,6 +106,23 @@ public class ConsoleView {
     public String receiveFindTripId() {
         System.out.print("찾고 싶은 여정의 여행 Id를 입력하세요: ");
         return scanner.nextLine();
+    }
+
+    public void showTripInformation(TripDTO tripDTO) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String result = String.format(
+                "\n[여행정보 조회결과]\n" +
+                "여행 ID: %s \n" +
+                "여행 이름: %s\n" +
+                "여행 출발날짜: %s\n" +
+                "여행 도착날짜: %s\n",
+                tripDTO.getTripId(),
+                tripDTO.getTripName(),
+                dateFormat.format(tripDTO.getStartDate()),
+                dateFormat.format(tripDTO.getEndDate())
+        );
+
+        System.out.println(result);
     }
 
     private void displayMenu() {
