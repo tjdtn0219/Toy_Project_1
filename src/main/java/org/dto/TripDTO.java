@@ -1,20 +1,20 @@
 package org.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString
 public class TripDTO {
 
     // id
-    private int tripId;
+    private int Id;
 
     // 여행 이름
     private String tripName;
@@ -25,6 +25,6 @@ public class TripDTO {
     private Date endDate;
 
     // 여정(Itineraries) 객체 배열
-    private ItinerariesDTO[] itineraries;
+    private List<ItineraryDTO> itineraries;
 
 }
