@@ -1,6 +1,7 @@
 package org.dto;
 
 import lombok.*;
+import org.entity.Itinerary;
 
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class ItineraryDTO {
     @Builder
     @ToString
     public static class Request {
-        private int tripId;
+        private Integer tripId;
 
         // 출발지, 도착지
         private String departurePlace;
@@ -25,6 +26,7 @@ public class ItineraryDTO {
         private Date arrivalTime;
         private Date checkInTime;
         private Date checkOutTime;
+
     }
 
     @Getter
@@ -34,8 +36,8 @@ public class ItineraryDTO {
     @Builder
     @ToString
     public static class Response {
-        private int Id;
-        private int tripId;
+        private Integer Id;
+        private Integer tripId;
 
         private String departurePlace;
         private String destination;
@@ -44,6 +46,18 @@ public class ItineraryDTO {
         private Date arrivalTime;
         private Date checkInTime;
         private Date checkOutTime;
+        public static Response fromEntity(Itinerary itinerary) {
+            return Response.builder()
+                    .Id(itinerary.getId())
+                    .tripId(itinerary.getTripId())
+                    .departurePlace(itinerary.getDeparturePlace())
+                    .destination(itinerary.getDestination())
+                    .departureTime(itinerary.getDepartureTime())
+                    .arrivalTime(itinerary.getArrivalTime())
+                    .checkInTime(itinerary.getCheckInTime())
+                    .checkOutTime(itinerary.getCheckOutTime())
+                    .build();
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package org.frontcontroller;
 
 import org.frontcontroller.controller.*;
 import org.view.ConsoleView;
+import org.view.SelectOptionView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +24,10 @@ public class FrontController {
         controllerMap.put(5, new TerminateController());
     }
 
-    public void service(ConsoleView consoleView) throws Exception {
-        int input = consoleView.receiveInput();
+    public void service() throws Exception {
+        SelectOptionView selectOptionView = new SelectOptionView();
+        int input = selectOptionView.receiveInput();
+
         Controller controller = controllerMap.get(input);
 
         if(controller==null) {
@@ -32,15 +35,15 @@ public class FrontController {
             return ;
         }
 
-        controller.process(consoleView);
+        controller.process();
 
     }
 
     public static void main(String[] args) throws Exception {
-        ConsoleView consoleView = new ConsoleView();
+        SelectOptionView selectOptionView = new SelectOptionView();
         FrontController frontController = new FrontController();
         while(true) {
-            frontController.service(consoleView);
+            frontController.service();
         }
 
 

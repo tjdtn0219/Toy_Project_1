@@ -13,8 +13,8 @@ import java.util.Date;
 public class Itinerary {
 
     // id
-    private int Id;
-    private int tripId;
+    private Integer Id;
+    private Integer tripId;
 
     // 출발지, 도착지
     private String departurePlace;

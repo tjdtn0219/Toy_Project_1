@@ -1,17 +1,32 @@
 package org.frontcontroller.controller;
 
 import org.dto.TripDTO;
+import org.dto.respository.TripRepository;
+import org.entity.Trip;
 import org.frontcontroller.Controller;
-import org.view.ConsoleView;
+import org.view.TripView;
 
 import java.text.ParseException;
 
 public class TripSaveController implements Controller {
 
+    private TripRepository tripRepository = TripRepository.getInstance();
+
     @Override
-    public void process(ConsoleView consoleView) throws ParseException {
-        TripDTO.Request tripDto = consoleView.writeTripInformation();
-        System.out.println(tripDto.toString());     //TAG용으로 출력(지울 예정)
-        //Model.저장(tripDto) 호출
+    public void process() throws ParseException {
+//        System.out.println("여행 기록");
+        TripView tripView = new TripView();
+        TripDTO.Request request = tripView.getDtoFromInput();
+
+        Trip trip = Trip.builder()
+                .tripName(request.getTripName())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .build();
+
+        Trip savedTrip = tripRepository.save(trip);  //이것에 해당하는 부분을 Model에서 만들어주세요.
+
+        System.out.println("**저장 내역**\n" + savedTrip + "\n");
+
     }
 }
