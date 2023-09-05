@@ -23,7 +23,7 @@ public class FrontController {
         controllerMap.put(5, new TerminateController());
     }
 
-    public void service(ConsoleView consoleView) {
+    public void service(ConsoleView consoleView) throws Exception {
         int input = consoleView.receiveInput();
         Controller controller = controllerMap.get(input);
 
@@ -36,7 +36,7 @@ public class FrontController {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ConsoleView consoleView = new ConsoleView();
         FrontController frontController = new FrontController();
         while(true) {

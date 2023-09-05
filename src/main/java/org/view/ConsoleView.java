@@ -7,19 +7,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleView {
-    private final Scanner scanner;
+    private final Scanner sc;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd / hh:mm:ss");
+
+
 
     public ConsoleView() {
-        scanner = new Scanner(System.in);
+        sc = new Scanner(System.in);
     }
 
     public int receiveInput() {
         while(true) {
             displayMenu();
-            String input = scanner.nextLine();
+            String input = sc.nextLine();
 
             if(validate(input)) {
                 return Integer.parseInt(input);
@@ -27,111 +32,110 @@ public class ConsoleView {
         }
     }
 
-    public TripDTO writeTripInformation() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        TripDTO tripDTO = new TripDTO();
+    public TripDTO.Request writeTripInformation() throws ParseException {
 
-        System.out.println("기록할 여행 정보를 입력하세요.");
-              /* 여행 Id는 따로 생성해야 합니다. */
-        System.out.print("여행 이름을 입력하세요: ");
-        tripDTO.setTripName(scanner.nextLine());
-        System.out.print("여행 시작날짜을 입력하세요: ");
-        try {
-            Date startDate = dateFormat.parse(scanner.nextLine());
-            tripDTO.setStartDate(startDate);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.print("여행 종료날짜을 입력하세요: ");
-        try {
-            Date endDate = dateFormat.parse(scanner.nextLine());
-            tripDTO.setEndDate(endDate);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        String tripName;
+        Date startDate;
+        Date endDate;
 
-        return tripDTO;
+        System.out.println("기록할 여행 정보를 입력 하세요.");
+        System.out.print("여행 이름을 입력 하세요: ");
+        tripName = sc.nextLine();
+        System.out.print("여행 시작 날짜을 입력 하세요: ");
+        startDate = dateFormat.parse(sc.nextLine());
+        System.out.print("여행 종료 날짜을 입력 하세요: ");
+        endDate = dateFormat.parse(sc.nextLine());
+
+        return TripDTO.Request.builder()
+                .tripName(tripName)
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
     }
 
-    public ItineraryDTO writeItinerariesInformation() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd / hh:mm:ss");
-        ItineraryDTO itineraryDTO = new ItineraryDTO();
+    public ItineraryDTO.Request writeItinerariesInformation() throws ParseException {
 
-        System.out.println("기록할 여정 정보를 입력하세요.");
-              /* 여정 Id는 따로 생성해야 합니다. */
+        int tripId;
+        String departurePlace;
+        String destination;
+
+        Date departureTime;
+        Date arrivalTime;
+        Date checkInTime;
+        Date checkOutTime;
+
+        System.out.println("기록할 여정 정보를 입력 하세요.");
+
+        System.out.print("찾고 싶은 여정의 여행 Id를 입력 하세요: ");
+        tripId = Integer.parseInt(sc.nextLine());
         System.out.print("여정 출발지를 입력하세요: ");
-        itineraryDTO.setDeparturePlace(scanner.nextLine());
+        departurePlace = sc.nextLine();
         System.out.print("여정 도착지를 입력하세요: ");
-        itineraryDTO.setDestination(scanner.nextLine());
+        destination = sc.nextLine();
         System.out.print("여정 시작시간을 입력하세요: ");
-        try {
-            Date departureTime = dateFormat.parse(scanner.nextLine());
-            itineraryDTO.setDepartureTime(departureTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        departureTime = timeFormat.parse(sc.nextLine());
         System.out.print("여정 도착시간을 입력하세요: ");
-        try {
-            Date arrivalTime = dateFormat.parse(scanner.nextLine());
-            itineraryDTO.setArrivalTime(arrivalTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        arrivalTime = timeFormat.parse(sc.nextLine());
         System.out.print("여정 체크인 시간을 입력하세요: ");
-        try {
-            Date checkInTime = dateFormat.parse(scanner.nextLine());
-            itineraryDTO.setCheckInTime(checkInTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        checkInTime = timeFormat.parse(sc.nextLine());
         System.out.print("여정 체크아웃 시간을 입력하세요: ");
-        try {
-            Date checkOutTime = dateFormat.parse(scanner.nextLine());
-            itineraryDTO.setCheckOutTime(checkOutTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        checkOutTime = timeFormat.parse(sc.nextLine());
 
-        return itineraryDTO;
+
+        return ItineraryDTO.Request.builder()
+                .tripId(tripId)
+                .departurePlace(departurePlace)
+                .destination(destination)
+                .departureTime(departureTime)
+                .arrivalTime(arrivalTime)
+                .checkInTime(checkInTime)
+                .checkOutTime(checkOutTime)
+                .build();
     }
 
     // 나중에 예외처리 필요!!
     public boolean checkWriteContinue() {
-        String input = scanner.nextLine();
+        String input = sc.nextLine();
         return "Y".equals(input);
     }
 
-    // 찾고 싶은 여정이 속해있는 여행의 Id를 이용해서 여행을 조회
+    // 찾고 싶은 여정이 속해 있는 여행의 Id를 이용해서 여행을 조회
     public int receiveFindTripId() {
         System.out.print("찾고 싶은 여정의 여행 Id를 입력하세요: ");
-        return Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(sc.nextLine());
     }
 
     public int receiveAddedTripId() {
         /* 입력 받은 여정을 어느 여행에 저장 할건지 */
         System.out.print("찾고 싶은 여정의 여행 Id를 입력하세요: ");
-        return Integer.parseInt(scanner.nextLine());
+        return Integer.parseInt(sc.nextLine());
     }
 
-    public void showTripInformation(TripDTO tripDTO) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String result = String.format(
-                "\n[여행기록정보 조회결과]\n" +
-                "여행 ID: %s \n" +
-                "여행 이름: %s\n" +
-                "여행 출발날짜: %s\n" +
-                "여행 도착날짜: %s\n",
-                tripDTO.getId(),
-                tripDTO.getTripName(),
-                dateFormat.format(tripDTO.getStartDate()),
-                dateFormat.format(tripDTO.getEndDate())
-        );
+    public void showTripInformation(List<TripDTO.Response> tripDtoList) {
+        tripDtoList.forEach(this::showTripTable);
+    }
 
+    private void showTripTable(TripDTO.Response response) {
+        String result = String.format(
+                        "\n[여행기록정보 조회결과]\n" +
+                                "여행 ID: %s \n" +
+                                "여행 이름: %s\n" +
+                                "여행 출발날짜: %s\n" +
+                                "여행 도착날짜: %s\n",
+                response.getId(),
+                response.getTripName(),
+                dateFormat.format(response.getStartDate()),
+                dateFormat.format(response.getEndDate())
+        );
         System.out.println(result);
     }
 
-    public void showItinerariesInformation(ItineraryDTO intItineraryDTO) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd / hh:mm:ss");
+    public void showItinerariesInformation(List<ItineraryDTO.Response> itineraryDtoList) {
+        itineraryDtoList.forEach(this::showItineraryTable);
+
+    }
+
+    private void showItineraryTable(ItineraryDTO.Response response) {
         String result = String.format(
                 "\n[여정기록정보 조회결과]\n" +
                         "여정 ID: %s \n" +
@@ -141,13 +145,13 @@ public class ConsoleView {
                         "여정 도착시간: %s\n" +
                         "여정 체크인시간: %s\n" +
                         "여정 체크아웃시간: %s\n",
-                intItineraryDTO.getId(),
-                intItineraryDTO.getDeparturePlace(),
-                intItineraryDTO.getDestination(),
-                dateFormat.format(intItineraryDTO.getDepartureTime()),
-                dateFormat.format(intItineraryDTO.getArrivalTime()),
-                dateFormat.format(intItineraryDTO.getCheckInTime()),
-                dateFormat.format(intItineraryDTO.getCheckOutTime())
+                response.getId(),
+                response.getDeparturePlace(),
+                response.getDestination(),
+                timeFormat.format(response.getDepartureTime()),
+                timeFormat.format(response.getArrivalTime()),
+                timeFormat.format(response.getCheckInTime()),
+                timeFormat.format(response.getCheckOutTime())
         );
 
         System.out.println(result);
@@ -155,7 +159,7 @@ public class ConsoleView {
 
     public String chooseFileType() {
         System.out.print("파일 타입을 고르세요(JSON, CSV) : ");
-        return scanner.nextLine();
+        return sc.nextLine();
     }
 
     private void displayMenu() {
