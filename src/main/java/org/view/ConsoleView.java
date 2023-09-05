@@ -148,6 +148,11 @@ public class ConsoleView {
         System.out.println(result);
     }
 
+    public String chooseFileType() {
+        System.out.print("파일 타입을 고르세요(JSON, CSV) : ");
+        return scanner.nextLine();
+    }
+
     private void displayMenu() {
         StringBuilder mainMenu = new StringBuilder();
         mainMenu.append("---------------------------------------------------------------\n")
