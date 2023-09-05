@@ -1,9 +1,6 @@
-package org.dto;
+package org.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,10 +8,13 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItinerariesDTO {
+@Builder
+@ToString
+public class Itinerary {
 
     // id
-    private int itineraryId;
+    private Integer Id;
+    private Integer tripId;
 
     // 출발지, 도착지
     private String departurePlace;

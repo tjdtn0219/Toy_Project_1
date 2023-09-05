@@ -1,30 +1,50 @@
 package org.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.entity.Itinerary;
+import org.entity.Trip;
 
 import java.util.Date;
+import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class TripDTO {
 
-    // id
-    private int tripId;
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class Request {
+        private String tripName;
+        private Date startDate;
+        private Date endDate;
 
-    // 여행 이름
-    private String tripName;
+    }
 
-    // Date 타입으로 시간 저장
-    // https://clsrn4561.tistory.com/15   <<  Date타입 참고 블로그
-    private Date startDate;
-    private Date endDate;
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @ToString
+    public static class Response {
+        private Integer id;
+        private String tripName;
+        private Date startDate;
+        private Date endDate;
+        private List<ItineraryDTO.Response> itineraries;
 
-    // 여정(Itineraries) 객체 배열
-    private ItinerariesDTO[] itineraries;
+        public static Response fromEntity(Trip trip, List<Itinerary> itineraries) {
+            return Response.builder()
+                    .id(trip.getId())
+                    .tripName(trip.getTripName())
+                    .startDate(trip.getStartDate())
+                    .endDate(trip.getEndDate())
+//                    .itineraries()
+                    .build();
+        }
+    }
 
 }
