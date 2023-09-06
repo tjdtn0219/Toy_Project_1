@@ -6,6 +6,7 @@ import org.entity.Trip;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class TripDTO {
@@ -37,12 +38,14 @@ public class TripDTO {
         private List<ItineraryDTO.Response> itineraries;
 
         public static Response fromEntity(Trip trip, List<Itinerary> itineraries) {
+            List<ItineraryDTO.Response> itineraryDtoList  = itineraries.stream()
+                    .map(ItineraryDTO.Response::fromEntity).toList();
             return Response.builder()
                     .id(trip.getId())
                     .tripName(trip.getTripName())
                     .startDate(trip.getStartDate())
                     .endDate(trip.getEndDate())
-//                    .itineraries()
+                    .itineraries(itineraryDtoList)
                     .build();
         }
     }

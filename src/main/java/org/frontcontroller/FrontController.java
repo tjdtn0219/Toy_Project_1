@@ -40,7 +40,6 @@ public class FrontController {
     }
 
     public static void main(String[] args) throws Exception {
-        SelectOptionView selectOptionView = new SelectOptionView();
         FrontController frontController = new FrontController();
         while(true) {
             frontController.service();
