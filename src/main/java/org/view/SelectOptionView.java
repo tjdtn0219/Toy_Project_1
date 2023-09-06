@@ -22,7 +22,7 @@ public class SelectOptionView {
         displayMenu();
         String input = sc.nextLine();
 
-        return validate(input);
+        return validate(input); //E 발생
     }
 
     private void displayMenu() {

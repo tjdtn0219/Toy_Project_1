@@ -25,7 +25,8 @@ public class TripListController implements Controller {
 
         List<TripDTO.Response> responseList = new ArrayList<>();
         for (Trip trip : trips) {
-            List<Itinerary> itineraries = itineraryRepository.findAllByTripId(trip.getId());    //이 부분을 Model에서 구현
+            List<Itinerary> itineraries = itineraryRepository.findAllByTripId(trip.getId());
+            //이 부분을 Model에서 구현
 
             TripDTO.Response response = TripDTO.Response.fromEntity(trip, itineraries);
             responseList.add(response);
