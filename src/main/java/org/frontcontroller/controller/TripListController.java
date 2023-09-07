@@ -1,11 +1,12 @@
 package org.frontcontroller.controller;
 
+import org.dto.ResponseItineraryDTO;
+import org.dto.ResponseTripDTO;
 import org.dto.TripDTO;
-import org.dto.respository.ItineraryRepository;
-import org.dto.respository.TripRepository;
-import org.entity.Itinerary;
-import org.entity.Trip;
-import org.frontcontroller.Controller;
+import org.model.Impl.ItineraryModelImpl;
+import org.model.Impl.TripModelImpl;
+import org.model.ItineraryModel;
+import org.model.TripModel;
 import org.view.TripView;
 
 import java.util.ArrayList;
@@ -13,19 +14,19 @@ import java.util.List;
 
 public class TripListController implements Controller {
 
-    private TripRepository tripRepository = TripRepository.getInstance();
-    private ItineraryRepository itineraryRepository = ItineraryRepository.getInstance();
+    private TripModel tripModelimpl = new TripModelImpl();
+    private ItineraryModel itineraryimpl = new ItineraryModelImpl();
 
     @Override
     public void process() {
 //        System.out.println("여행 조회");
         TripView tripView = new TripView();
 
-        List<Trip> trips = tripRepository.findAll();    //이 부분을 Model에서 만들어주세요.
+        List<ResponseTripDTO> trips = tripModelimpl.findAll();
 
         List<TripDTO.Response> responseList = new ArrayList<>();
-        for (Trip trip : trips) {
-            List<Itinerary> itineraries = itineraryRepository.findAllByTripId(trip.getId());
+        for (ResponseTripDTO trip : trips) {
+            List<ResponseItineraryDTO> itineraries = itineraryimpl.findAllByTripId(trip.getDirPath());
             //이 부분을 Model에서 구현
 
             TripDTO.Response response = TripDTO.Response.fromEntity(trip, itineraries);
