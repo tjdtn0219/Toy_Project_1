@@ -15,8 +15,8 @@ public class TripModelImpl implements TripModel {
     String baseFileName = "MyTrip_"; // Unique identifier
     String jsonfileExtension = ".json"; // json파일 확장자
     String csvfileExtension = ".csv"; // csv파일 확장자
-    String jsonPath = "C:\\Users\\82102\\Desktop\\JSON"; //폴더 경로
-    String csvPath = "C:\\Users\\82102\\Desktop\\CSV"; //폴더 경로
+    String jsonPath = "src\\JSON"; //폴더 경로
+    String csvPath = "src\\CSV"; //폴더 경로
 
     public ResponseTripDTO save(ResponseTripDTO responseTripDTO) {
         try {

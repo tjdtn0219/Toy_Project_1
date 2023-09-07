@@ -623,6 +623,10 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# CSV, JSON 디렉토리 하위 폴더 제외
+src/JSON/My**
+src/CSV/My**
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
