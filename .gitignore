@@ -12,6 +12,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+/toy_project/
+
+
 # AWS User-specific
 .idea/**/aws.xml
 
