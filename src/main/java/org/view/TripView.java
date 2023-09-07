@@ -17,9 +17,9 @@ public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
         System.out.println("기록할 여행 정보를 입력 하세요.");
         System.out.print("여행 이름을 입력 하세요: ");
         tripName = sc.nextLine();
-        System.out.print("여행 시작 날짜을 입력 하세요: ");
+        System.out.print("여행 시작 날짜를 입력 하세요: "); //을->를 수정
         startDate = dateFormat.parse(sc.nextLine());
-        System.out.print("여행 종료 날짜을 입력 하세요: ");
+        System.out.print("여행 종료 날짜를 입력 하세요: "); //을->를 수정
         endDate = dateFormat.parse(sc.nextLine());
 
         return TripDTO.Request.builder()
