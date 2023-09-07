@@ -28,11 +28,11 @@ public class TripSaveController implements Controller {
 
         ResponseTripDTO savedResponseTripDTO = tripModel.save(responseTripDTO);
 
-<<<<<<< HEAD:src/main/java/org/frontcontroller/controller/Impl/TripSaveController.java
+
         System.out.println("**저장 내역**\n" + savedResponseTripDTO + "\n");
-=======
-        System.out.println("**저장 내역**\n" + savedTrip + "\n");   //임시로 이렇게 설정함
->>>>>>> bd239237ae78752cc08ae73995e651a33f0b47d5:src/main/java/org/frontcontroller/controller/TripSaveController.java
+
+       // System.out.println("**저장 내역**\n" + savedTrip + "\n");   //임시로 이렇게 설정함
+
 
     }
 }
