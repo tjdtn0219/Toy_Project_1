@@ -1,7 +1,6 @@
 package org.dto;
 
 import lombok.*;
-import org.entity.Itinerary;
 
 import java.util.Date;
 
@@ -46,16 +45,16 @@ public class ItineraryDTO {
         private Date arrivalTime;
         private Date checkInTime;
         private Date checkOutTime;
-        public static Response fromEntity(Itinerary itinerary) {
+        public static Response fromEntity(ResponseItineraryDTO responseItineraryDTO) {
             return Response.builder()
-                    .Id(itinerary.getId())
-                    .tripId(itinerary.getTripId())
-                    .departurePlace(itinerary.getDeparturePlace())
-                    .destination(itinerary.getDestination())
-                    .departureTime(itinerary.getDepartureTime())
-                    .arrivalTime(itinerary.getArrivalTime())
-                    .checkInTime(itinerary.getCheckInTime())
-                    .checkOutTime(itinerary.getCheckOutTime())
+                    .Id(responseItineraryDTO.getId())
+                    .tripId(responseItineraryDTO.getTripId())
+                    .departurePlace(responseItineraryDTO.getDeparturePlace())
+                    .destination(responseItineraryDTO.getDestination())
+                    .departureTime(responseItineraryDTO.getDepartureTime())
+                    .arrivalTime(responseItineraryDTO.getArrivalTime())
+                    .checkInTime(responseItineraryDTO.getCheckInTime())
+                    .checkOutTime(responseItineraryDTO.getCheckOutTime())
                     .build();
         }
     }
