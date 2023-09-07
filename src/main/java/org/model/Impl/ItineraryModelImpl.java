@@ -4,86 +4,83 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.dto.ResponseItineraryDTO;
+import org.dto.ResponseTripDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.model.Impl.util.itinerary.itineraryCsvUtil;
+import org.model.Impl.util.itinerary.itineraryJsonUtil;
 import org.model.ItineraryModel;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ItineraryModelImpl implements ItineraryModel {
+    String baseFileName = "MyTrip_"; // Unique identifier
+    String jsonPath = "C:\\Users\\82102\\Desktop\\JSON"; //폴더 경로
+    String csvPath = "C:\\Users\\82102\\Desktop\\CSV"; //폴더 경로
 
 
-    public List<ResponseItineraryDTO> findAllByTripId(String tripPath) {
+    public List<ResponseItineraryDTO> findAllitineraryJsonByTripId(int tripId) {
 
-        File itineraryFile = new File(StringUtils.join(tripPath,"/MyItinerary.json"));
+        itineraryJsonUtil itineraryJsonUtil = new itineraryJsonUtil();
+        List<ResponseItineraryDTO> itineraryDTO = new ArrayList<>();
+        String tripPath = baseFileName + tripId;
+        File directory = new File(jsonPath);
+        File[] files = directory.listFiles();
+       
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory() && file.getName().equals(tripPath)) {
+                    File itineraryFile = new File(StringUtils.join(jsonPath,"\\",tripPath,"/MyItinerary.json"));
 
-        if (!itineraryFile.exists()) {
-            System.out.println("디렉터리가 존재하지 않습니다: " + itineraryFile);
-            return Collections.emptyList();
+                    if (!itineraryFile.exists()) {
+                        System.out.println("디렉터리가 존재하지 않습니다: " + itineraryFile);
+                        return Collections.emptyList();
+                    }
+                  
+                    itineraryDTO = itineraryJsonUtil.readItineraryJsonFile(itineraryFile);
+
+                }
+            }
         }
-
-        List<ResponseItineraryDTO> itineraryDTO = readItineraryJsonFile(itineraryFile);
 
         return itineraryDTO;
 
     }
 
-    private List<ResponseItineraryDTO> readItineraryJsonFile(File file) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<ResponseItineraryDTO> responseItineraryDTOS = new ArrayList<>();
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            JSONParser jsonParser = new JSONParser();
-            Object object=  jsonParser.parse(br);
-            if (object instanceof String) {
-                JSONArray jsonArray = new JSONArray((String) object);
+    public List<ResponseItineraryDTO> findAllitineraryCsvByTripId(int tripId) {
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    ResponseItineraryDTO responseItineraryDTO = new ResponseItineraryDTO();
-                    if (jsonObject.has("id")) { // "id" 키가 있는지 확인
-                        responseItineraryDTO.setId((Integer) jsonObject.get("id"));
+        itineraryCsvUtil itineraryCsvUtil = new itineraryCsvUtil();
+        List<ResponseItineraryDTO> itineraryDTO = new ArrayList<>();
+        String tripPath = baseFileName + tripId;
+        File directory = new File(jsonPath);
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory() && file.getName().equals(tripPath)) {
+                    File itineraryFile = new File(StringUtils.join(csvPath,"\\",tripPath,"/MyItinerary.csv"));
+
+                    if (!itineraryFile.exists()) {
+                        System.out.println("디렉터리가 존재하지 않습니다: " + itineraryFile);
+                        return Collections.emptyList();
                     }
-                    responseItineraryDTO.setTripId((Integer) jsonObject.get("tripId"));
-                    responseItineraryDTO.setDeparturePlace((String) jsonObject.get("departurePlace"));
-                    responseItineraryDTO.setDestination((String) jsonObject.get("destination"));
-                    String departureTimeString = String.valueOf(jsonObject.get("departureTime"));
-                    Date departureTime = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(departureTimeString);
-                    responseItineraryDTO.setDepartureTime(departureTime);
-                    String arrivalTimeString = String.valueOf(jsonObject.get("arrivalTime"));
-                    Date arrivalTime = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(arrivalTimeString);
-                    responseItineraryDTO.setArrivalTime(arrivalTime);
-                    String checkInTimeString = String.valueOf(jsonObject.get("checkInTime"));
-                    Date checkTime = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(checkInTimeString);
-                    responseItineraryDTO.setArrivalTime(checkTime);
-                    String checkOutTimeString = String.valueOf(jsonObject.get("checkOutTime"));
-                    Date checkOutTime = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(checkOutTimeString);
-                    responseItineraryDTO.setArrivalTime(checkOutTime);
-                    responseItineraryDTOS.add(responseItineraryDTO);
 
-                    System.out.println(responseItineraryDTO.toString());
+                    itineraryDTO = itineraryCsvUtil.readItineraryCsvFile(itineraryFile);
+
                 }
             }
-
-
-            return responseItineraryDTOS;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        } catch (java.text.ParseException e) {
-            throw new RuntimeException(e);
         }
-        return null;
+
+        return itineraryDTO;
+
     }
+
 
     @Override
     public ResponseItineraryDTO save(Integer tripId, ResponseItineraryDTO responseItineraryDTO) {
+        itineraryCsvUtil itineraryCsvUtil = new itineraryCsvUtil();
         ResponseItineraryDTO savedResponseItineraryDTO = null;
         try {
             // JSON 폴더 경로 설정
@@ -102,8 +99,8 @@ public class ItineraryModelImpl implements ItineraryModel {
 
             for (File subFolder : subjsonFolders) {
                 String folderName = subFolder.getName();
-                if (folderName.startsWith("MyTrip") && folderName.length() > "MyTrip".length()) {
-                    String tripIdStr = folderName.substring("MyTrip".length());
+                if (folderName.startsWith("MyTrip_") && folderName.length() > "MyTrip_".length()) {
+                    String tripIdStr = folderName.substring("MyTrip_".length());
                     if (tripIdStr.equals(String.valueOf(tripId))) {
                         jsontargetFolderPath = subFolder.getAbsolutePath();
                         break; // 폴더를 찾았으면 반복문 종료
@@ -113,8 +110,8 @@ public class ItineraryModelImpl implements ItineraryModel {
 
             for (File subFolder : subcsvFolders) {
                 String folderName = subFolder.getName();
-                if (folderName.startsWith("MyTrip") && folderName.length() > "MyTrip".length()) {
-                    String tripIdStr = folderName.substring("MyTrip".length());
+                if (folderName.startsWith("MyTrip_") && folderName.length() > "MyTrip_".length()) {
+                    String tripIdStr = folderName.substring("MyTrip_".length());
                     if (tripIdStr.equals(String.valueOf(tripId))) {
                         csvtargetFolderPath = subFolder.getAbsolutePath();
                         break; // 폴더를 찾았으면 반복문 종료
@@ -166,7 +163,7 @@ public class ItineraryModelImpl implements ItineraryModel {
                 }
 
                 File csvFile = new File(csvtargetFolderPath, "MyItinerary.csv");
-                writeCsvData(csvFile, responseItineraryDTO);
+                itineraryCsvUtil.writeCsvData(csvFile, responseItineraryDTO);
 
 
                 savedResponseItineraryDTO = responseItineraryDTO;
@@ -181,27 +178,5 @@ public class ItineraryModelImpl implements ItineraryModel {
         return savedResponseItineraryDTO;
     }
 
-    private void writeCsvData(File csvFile, ResponseItineraryDTO responseItineraryDTO) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(csvFile);
-             OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-             BufferedWriter writer = new BufferedWriter(osw)) {
-            // Write BOM.
-            writer.write('\ufeff');
 
-            // 여정 데이터를 CSV 파일에 추가
-            String[] tempCsvInfo = new String[7];
-            tempCsvInfo[0] = String.valueOf(responseItineraryDTO.getTripId());
-            tempCsvInfo[1] = responseItineraryDTO.getDeparturePlace();
-            tempCsvInfo[2] = responseItineraryDTO.getDestination();
-            tempCsvInfo[3] = String.valueOf(responseItineraryDTO.getDepartureTime());
-            tempCsvInfo[4] = String.valueOf(responseItineraryDTO.getArrivalTime());
-            tempCsvInfo[5] = String.valueOf(responseItineraryDTO.getCheckInTime());
-            tempCsvInfo[6] = String.valueOf(responseItineraryDTO.getCheckOutTime());
-
-            writer.write(String.join(",",tempCsvInfo));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
