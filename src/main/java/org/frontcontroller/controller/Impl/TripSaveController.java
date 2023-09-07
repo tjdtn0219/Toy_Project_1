@@ -5,6 +5,7 @@ import org.frontcontroller.controller.Controller;
 import org.model.Impl.TripModelImpl;
 import org.dto.ResponseTripDTO;
 import org.model.TripModel;
+import org.view.ItineraryView;
 import org.view.TripView;
 
 import java.text.ParseException;
@@ -12,11 +13,11 @@ import java.text.ParseException;
 public class TripSaveController implements Controller {
 
     private TripModel tripModel = new TripModelImpl();
+    private TripView tripView = new TripView();
 
     @Override
     public void process() throws ParseException {
 //        System.out.println("여행 기록");
-        TripView tripView = new TripView();
 
         TripDTO.Request request = tripView.getDtoFromInput();
 

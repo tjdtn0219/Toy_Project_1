@@ -34,7 +34,7 @@ public class TripDTO {
         private Date endDate;
         private List<ItineraryDTO.Response> itineraries;
 
-        public static Response fromEntity(ResponseTripDTO responseTripDTO, List<ResponseItineraryDTO> itineraries) {
+        public static Response fromEntity(ResponseTripDTO responseTripDTO) {
             return Response.builder()
                     .id(responseTripDTO.getId())
                     .tripName(responseTripDTO.getTripName())
