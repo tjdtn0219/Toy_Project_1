@@ -23,12 +23,12 @@ public class TripListController implements Controller {
 //        System.out.println("여행 조회");
         TripView tripView = new TripView();
 
-         // 폴더에 있는 모든 여행리스트를 가져옴
+        // 폴더에 있는 모든 여행리스트를 가져옴
         List<ResponseTripDTO> responseTripDTOS = tripModel.findAll();
         System.out.println(responseTripDTOS.toString());
 
-          List<TripDTO.Response> responseList = new ArrayList<>();
-          for (ResponseTripDTO responseTripDTO : responseTripDTOS) {
+        List<TripDTO.Response> responseList = new ArrayList<>();
+        for (ResponseTripDTO responseTripDTO : responseTripDTOS) {
             List<ResponseItineraryDTO> itineraries = itineraryModel.findAllByTripId(responseTripDTO.getDirPath());
 
             TripDTO.Response response = TripDTO.Response.fromEntity(responseTripDTO, itineraries);
