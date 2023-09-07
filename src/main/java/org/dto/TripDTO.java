@@ -1,8 +1,6 @@
 package org.dto;
 
 import lombok.*;
-import org.entity.Itinerary;
-import org.entity.Trip;
 
 import java.util.Date;
 import java.util.List;
@@ -36,12 +34,12 @@ public class TripDTO {
         private Date endDate;
         private List<ItineraryDTO.Response> itineraries;
 
-        public static Response fromEntity(Trip trip, List<Itinerary> itineraries) {
+        public static Response fromEntity(ResponseTripDTO responseTripDTO, List<ResponseItineraryDTO> itineraries) {
             return Response.builder()
-                    .id(trip.getId())
-                    .tripName(trip.getTripName())
-                    .startDate(trip.getStartDate())
-                    .endDate(trip.getEndDate())
+                    .id(responseTripDTO.getId())
+                    .tripName(responseTripDTO.getTripName())
+                    .startDate(responseTripDTO.getStartDate())
+                    .endDate(responseTripDTO.getEndDate())
 //                    .itineraries()
                     .build();
         }
