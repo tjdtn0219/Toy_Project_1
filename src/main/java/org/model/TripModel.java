@@ -7,7 +7,9 @@ import java.util.List;
 public interface TripModel {
 
     public ResponseTripDTO save(ResponseTripDTO responseTripDTO);
-    public List<ResponseTripDTO> findAll();
-    public int findHighestNumber(String path, String baseFileName);
+    public List<ResponseTripDTO> JSONfindAll();
+    public List<ResponseTripDTO> CSVfindAll();
+
+
 
 }

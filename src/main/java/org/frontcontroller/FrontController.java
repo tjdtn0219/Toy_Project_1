@@ -45,7 +45,5 @@ public class FrontController {
         while(true) {
             frontController.service();
         }
-
-
     }
 }
