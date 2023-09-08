@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import static org.constant.ViewMessage.*;
+
 public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDTO.Response> {
 
     @Override
@@ -32,15 +34,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
     @Override
     public void showSaveResult(ItineraryDTO.Response dto) {
         String result = String.format(
-                "\n저장 완료!!\n" +
-                        "[여정기록정보 저장결과]\n" +
-                        "여정 ID: %s \n" +
-                        "여정 출발지: %s\n" +
-                        "여정 도착지: %s\n" +
-                        "여정 출발시간: %s\n" +
-                        "여정 도착시간: %s\n" +
-                        "여정 체크인시간: %s\n" +
-                        "여정 체크아웃시간: %s\n",
+                ITINERARY_SAVE_RESULT,
                 dto.getId(),
                 dto.getDeparturePlace(),
                 dto.getDestination(),
@@ -126,14 +120,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
 
     private void showItineraryTable(ItineraryDTO.Response response) {
         String result = String.format(
-                "\n[여정기록정보 조회결과]\n" +
-                        "여정 ID: %s \n" +
-                        "여정 출발지: %s\n" +
-                        "여정 도착지: %s\n" +
-                        "여정 출발시간: %s\n" +
-                        "여정 도착시간: %s\n" +
-                        "여정 체크인시간: %s\n" +
-                        "여정 체크아웃시간: %s\n",
+                ITINERARY_SEARCH_RESULT,
                 response.getId(),
                 response.getDeparturePlace(),
                 response.getDestination(),

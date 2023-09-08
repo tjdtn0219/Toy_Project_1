@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import static org.constant.ViewMessage.*;
+
 public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
 
     @Override
@@ -55,12 +57,7 @@ public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
     @Override
     public void showSaveResult(TripDTO.Response dto) {
         String result = String.format(
-                "\n저장 완료!!\n" +
-                        "[여행기록정보 저장결과]\n" +
-                        "여행 ID: %s \n" +
-                        "여행 이름: %s\n" +
-                        "여행 출발날짜: %s\n" +
-                        "여행 도착날짜: %s\n",
+                TRIP_SAVE_RESULT,
                 dto.getId(),
                 dto.getTripName(),
                 dateFormat.format(dto.getStartDate()),
@@ -89,11 +86,7 @@ public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
 
     private void showTripTable(TripDTO.Response trip) {
         String result = String.format(
-                "\n[여행기록정보 조회결과]\n" +
-                        "여행 ID: %s \n" +
-                        "여행 이름: %s\n" +
-                        "여행 출발날짜: %s\n" +
-                        "여행 도착날짜: %s\n",
+                TRIP_SEARCH_RESULT,
                 trip.getId(),
                 trip.getTripName(),
                 dateFormat.format(trip.getStartDate()),

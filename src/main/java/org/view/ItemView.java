@@ -7,13 +7,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.constant.FormatPattern.*;
+
 public interface ItemView<T, K> {
 
     public final Scanner sc = new Scanner(System.in);
 
-    public final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-    public final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    public final SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_FORMAT);
 
     public T getDtoFromInput() throws ParseException;
 
