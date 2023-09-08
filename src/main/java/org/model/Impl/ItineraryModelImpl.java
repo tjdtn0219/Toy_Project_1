@@ -160,7 +160,7 @@ public class ItineraryModelImpl implements ItineraryModel {
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.writeValue(jsonFile, responseDTOArray.toString());
                     savedResponseItineraryDTO = responseItineraryDTO;
-                    System.out.println("JSON 파일 및 csv 여정 저장 완료: " + jsonFile.getPath());
+
 
 
                 } catch (IOException e) {
