@@ -15,7 +15,6 @@ public class tripCsvUtil {
 
     public List<ResponseTripDTO> findAllCsvFiles(String directoryPath) {
         File directory = new File(directoryPath);
-        System.out.println("디렉토리 패스" + directoryPath);
         if (!directory.exists()) {
             System.out.println("디렉터리가 존재하지 않습니다: " + directoryPath);
             return Collections.EMPTY_LIST;
@@ -97,7 +96,7 @@ public class tripCsvUtil {
                     // CSV 파일에 데이터 쓰기
                     bw.write(sb.toString());
 
-                    System.out.println("CSV 파일 저장 완료: " + filePath);
+
                 } else {
                     System.out.println("ResponseTripDTO 객체가 null입니다.");
                 }
