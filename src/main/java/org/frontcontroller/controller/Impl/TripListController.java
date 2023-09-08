@@ -8,6 +8,7 @@ import org.dto.ResponseItineraryDTO;
 import org.dto.ResponseTripDTO;
 import org.model.ItineraryModel;
 import org.model.TripModel;
+import org.view.ItineraryView;
 import org.view.TripView;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ public class TripListController implements Controller {
 
     private TripModel tripModel = new TripModelImpl();
     private ItineraryModel itineraryModel = new ItineraryModelImpl();
+    private TripView tripView = new TripView();
 
     @Override
     public void process() {
 //        System.out.println("여행 조회");
-        TripView tripView = new TripView();
 
         // 폴더에 있는 모든 여행리스트를 가져옴,필요에 따라 JSON,CSV파일 받아서 해당 메소드들 호출해주시면 됩니다.
         List<ResponseTripDTO> responseJSONTripDTOS = tripModel.JSONfindAll();

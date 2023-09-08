@@ -17,8 +17,9 @@ import java.util.*;
 
 public class ItineraryModelImpl implements ItineraryModel {
     String baseFileName = "MyTrip_"; // Unique identifier
-    String jsonPath = "C:\\Users\\82102\\Desktop\\JSON"; //폴더 경로
-    String csvPath = "C:\\Users\\82102\\Desktop\\CSV"; //폴더 경로
+    String jsonPath = "src\\JSON"; //폴더 경로
+    String csvPath = "src\\CSV"; //폴더 경로
+    //C:\Users\s_sja\IdeaProjects\Toy-Project
 
 
     public List<ResponseItineraryDTO> findAllitineraryJsonByTripId(int tripId) {
