@@ -1,7 +1,7 @@
 package org.travelrecord.view;
 
 import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.ItineraryDTO;
+import org.travelrecord.dto.requestItineraryDTO;
 import org.travelrecord.exception.ViewErrorCode;
 import org.travelrecord.exception.ViewException;
 
@@ -11,10 +11,10 @@ import java.util.List;
 
 import static org.travelrecord.constant.ViewMessage.*;
 
-public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDTO.Response> {
+public class ItineraryView implements ItemView<requestItineraryDTO.Request, requestItineraryDTO.Response> {
 
     @Override
-    public ItineraryDTO.Request getDtoFromInput() {
+    public requestItineraryDTO.Request getDtoFromInput() {
         System.out.println("기록할 여정 정보를 입력 하세요.\n");
         while (true) {
             try {
@@ -27,12 +27,12 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
     }
 
     @Override
-    public void showDtoList(List<ItineraryDTO.Response> itineraryDtoList) {
+    public void showDtoList(List<requestItineraryDTO.Response> itineraryDtoList) {
         itineraryDtoList.forEach(this::showItineraryTable);
     }
 
     @Override
-    public void showSaveResult(ItineraryDTO.Response dto) {
+    public void showSaveResult(requestItineraryDTO.Response dto) {
         String result = String.format(
                 ITINERARY_SAVE_RESULT,
                 dto.getDeparturePlace(),
@@ -71,7 +71,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
         return Integer.parseInt(sc.nextLine());
     }
 
-    private ItineraryDTO.Request getRequest(int tripId) {
+    private requestItineraryDTO.Request getRequest(int tripId) {
         String departurePlace;
         String destination;
         Date departureTime;
@@ -96,7 +96,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
             throw new ViewException(ViewErrorCode.NOT_MATCHED_TIME_FORMAT);
         }
 
-        return ItineraryDTO.Request.builder()
+        return requestItineraryDTO.Request.builder()
                 .tripId(tripId)
                 .departurePlace(departurePlace)
                 .destination(destination)
@@ -118,7 +118,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
         }
     }
 
-    private void showItineraryTable(ItineraryDTO.Response response) {
+    private void showItineraryTable(requestItineraryDTO.Response response) {
         String result = String.format(
                 ITINERARY_SEARCH_RESULT,
                 response.getId(),

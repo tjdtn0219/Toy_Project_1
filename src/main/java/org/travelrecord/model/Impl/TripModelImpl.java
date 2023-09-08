@@ -1,7 +1,7 @@
 package org.travelrecord.model.Impl;
 
 
-import org.travelrecord.dto.ResponseTripDTO;
+import org.travelrecord.Entity.TripEntity;
 import org.travelrecord.model.Impl.util.LoadPath;
 import org.travelrecord.model.Impl.util.trip.tripCsvUtil;
 import org.travelrecord.model.Impl.util.trip.tripFolderUtil;
@@ -26,7 +26,7 @@ public class TripModelImpl implements TripModel {
         csvPath = loadPath.getCsvPath();
     }
 
-    public ResponseTripDTO save(ResponseTripDTO responseTripDTO) {
+    public TripEntity save(TripEntity tripEntity) {
         try {
             tripFolderUtil tripFolderUtil = new tripFolderUtil();
             tripJsonUtil tripJsonUtil = new tripJsonUtil();
@@ -35,7 +35,7 @@ public class TripModelImpl implements TripModel {
             int highestJsonNumber = tripFolderUtil.folderFindHighestNumber(jsonPath, baseFileName);
             int highestCsvNumber = tripFolderUtil.folderFindHighestNumber(csvPath, baseFileName);
 
-            responseTripDTO.setId(highestJsonNumber+1);
+            tripEntity.setId(highestJsonNumber+1);
 
             // 폴더명 생성
             String jsonFolderName = baseFileName + (highestJsonNumber + 1);
@@ -51,29 +51,29 @@ public class TripModelImpl implements TripModel {
             tripFolderUtil.createFolderIfNotExists(csvPath, csvFolderName);
 
             // JSON 파일 생성
-            tripJsonUtil.saveDTOAsJson(jsonFilePath, responseTripDTO);
+            tripJsonUtil.saveDTOAsJson(jsonFilePath, tripEntity);
 
-            tripCsvUtil.saveDTOAsCsv(csvFilePath, responseTripDTO);
+            tripCsvUtil.saveDTOAsCsv(csvFilePath, tripEntity);
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return responseTripDTO;
+        return tripEntity;
     }
 
     @Override
-    public List<ResponseTripDTO> JSONfindAll() {
+    public List<TripEntity> JSONfindAll() {
         tripJsonUtil tripJsonUtil = new tripJsonUtil();
-        List<ResponseTripDTO> tripList = tripJsonUtil.findAllJsonFiles(jsonPath);
+        List<TripEntity> tripList = tripJsonUtil.findAllJsonFiles(jsonPath);
         return tripList;
     }
 
     @Override
-    public List<ResponseTripDTO> CSVfindAll() {
+    public List<TripEntity> CSVfindAll() {
         tripCsvUtil tripCsvUtil = new tripCsvUtil();
-        List<ResponseTripDTO> tripList = tripCsvUtil.findAllCsvFiles(csvPath);
+        List<TripEntity> tripList = tripCsvUtil.findAllCsvFiles(csvPath);
         return tripList;
     }
     }

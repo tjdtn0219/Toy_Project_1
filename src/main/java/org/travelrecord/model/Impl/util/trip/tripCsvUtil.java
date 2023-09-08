@@ -1,6 +1,6 @@
 package org.travelrecord.model.Impl.util.trip;
 
-import org.travelrecord.dto.ResponseTripDTO;
+import org.travelrecord.Entity.TripEntity;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class tripCsvUtil {
 
-    public List<ResponseTripDTO> findAllCsvFiles(String directoryPath) {
+    public List<TripEntity> findAllCsvFiles(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             System.out.println("디렉터리가 존재하지 않습니다: " + directoryPath);
@@ -21,7 +21,7 @@ public class tripCsvUtil {
         }
 
         File[] files = directory.listFiles();
-        List<ResponseTripDTO> tripList = new ArrayList<>();
+        List<TripEntity> tripList = new ArrayList<>();
         if (files != null) {
             for (File file : files) {
                 if (file.isDirectory()) {
@@ -29,7 +29,7 @@ public class tripCsvUtil {
 
                 } else if (file.isFile() && file.getName().startsWith("MyTrip_")) {
                     // CSV 파일인 경우 읽고 ResponseTripDTO로 파싱하여 리스트에 추가
-                    ResponseTripDTO tripDTO = readTripCsvFile(file);
+                    TripEntity tripDTO = readTripCsvFile(file);
                     tripList.add(tripDTO);
                     if (tripDTO != null) {
                         tripDTO.setDirPath(file.getParent());
@@ -40,13 +40,13 @@ public class tripCsvUtil {
         return tripList;
     }
 
-    private ResponseTripDTO readTripCsvFile(File file) {
+    private TripEntity readTripCsvFile(File file) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "MS949"))) {
             String line = reader.readLine();
             if (line != null) {
                 String[] data = line.split(",");
                 if (data.length == 5) { // 필드 개수에 맞게 조정
-                    ResponseTripDTO tripDTO = new ResponseTripDTO();
+                    TripEntity tripDTO = new TripEntity();
                     tripDTO.setId(Integer.parseInt(data[0].replaceAll("\\]", "").trim()));
                     tripDTO.setTripName(data[1].trim());
 
@@ -70,7 +70,7 @@ public class tripCsvUtil {
         return null;
     }
 
-    public void saveDTOAsCsv(String filePath, ResponseTripDTO responseTripDTO) {
+    public void saveDTOAsCsv(String filePath, TripEntity tripEntity) {
         try {
             // CSV 파일 경로 설정 (폴더 내)
             File csvFile = new File(filePath);
@@ -78,9 +78,9 @@ public class tripCsvUtil {
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "MS949"))) {
 
                 // ResponseTripDTO 객체가 null이 아닌지 확인
-                if (responseTripDTO != null) {
+                if (tripEntity != null) {
                     // ResponseTripDTO 객체를 CSV 문자열로 변환
-                    String[] csvData = convertTripDTOToCsv(responseTripDTO);
+                    String[] csvData = convertTripDTOToCsv(tripEntity);
 
                     StringBuilder sb = new StringBuilder();
                     for (String data : csvData) {
@@ -107,21 +107,21 @@ public class tripCsvUtil {
         }
     }
 
-    private String[] convertTripDTOToCsv(ResponseTripDTO responseTripDTO) {
+    private String[] convertTripDTOToCsv(TripEntity tripEntity) {
         String[] csvData = new String[5]; // 필드 개수에 맞게 배열 크기 조정
 
-        if (responseTripDTO.getId() != null) {
-            csvData[0] = responseTripDTO.getId().toString();
+        if (tripEntity.getId() != null) {
+            csvData[0] = tripEntity.getId().toString();
         } else {
             // ID가 null인 경우에 대한 처리
             csvData[0] = "0";
         }
 
-        csvData[1] = new String(responseTripDTO.getTripName().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-        csvData[2] = formatDate(responseTripDTO.getStartDate());
-        csvData[3] = formatDate(responseTripDTO.getEndDate());
-        if (responseTripDTO.getDirPath() != null) {
-            new String(responseTripDTO.getDirPath().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        csvData[1] = new String(tripEntity.getTripName().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        csvData[2] = formatDate(tripEntity.getStartDate());
+        csvData[3] = formatDate(tripEntity.getEndDate());
+        if (tripEntity.getDirPath() != null) {
+            new String(tripEntity.getDirPath().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } else {
             // 파일 이름이 null인 경우
             csvData[4] = "null";

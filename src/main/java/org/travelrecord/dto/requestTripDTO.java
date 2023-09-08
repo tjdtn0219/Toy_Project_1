@@ -1,12 +1,13 @@
 package org.travelrecord.dto;
 
 import lombok.*;
+import org.travelrecord.Entity.TripEntity;
 
 import java.util.Date;
 import java.util.List;
 
 
-public class TripDTO {
+public class requestTripDTO {
 
     @Getter
     @Setter
@@ -32,14 +33,14 @@ public class TripDTO {
         private String tripName;
         private Date startDate;
         private Date endDate;
-        private List<ItineraryDTO.Response> itineraries;
+        private List<requestItineraryDTO.Response> itineraries;
 
-        public static Response fromEntity(ResponseTripDTO responseTripDTO) {
+        public static Response fromEntity(TripEntity tripEntity) {
             return Response.builder()
-                    .id(responseTripDTO.getId())
-                    .tripName(responseTripDTO.getTripName())
-                    .startDate(responseTripDTO.getStartDate())
-                    .endDate(responseTripDTO.getEndDate())
+                    .id(tripEntity.getId())
+                    .tripName(tripEntity.getTripName())
+                    .startDate(tripEntity.getStartDate())
+                    .endDate(tripEntity.getEndDate())
                     .build();
         }
     }

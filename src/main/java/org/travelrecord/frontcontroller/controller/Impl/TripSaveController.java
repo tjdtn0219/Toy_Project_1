@@ -1,7 +1,7 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
-import org.travelrecord.dto.ResponseTripDTO;
-import org.travelrecord.dto.TripDTO;
+import org.travelrecord.Entity.TripEntity;
+import org.travelrecord.dto.requestTripDTO;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.TripModelImpl;
 import org.travelrecord.model.TripModel;
@@ -15,16 +15,16 @@ public class TripSaveController implements Controller {
     @Override
     public void process() {
 
-        TripDTO.Request request = tripView.getDtoFromInput();
+        requestTripDTO.Request request = tripView.getDtoFromInput();
 
-        ResponseTripDTO responseTripDTO = ResponseTripDTO.builder()
+        TripEntity tripEntity = tripEntity.builder()
                 .tripName(request.getTripName())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .build();
 
-        ResponseTripDTO savedTrip = tripModel.save(responseTripDTO);
+        TripEntity savedTrip = tripModel.save(tripEntity);
 
-        tripView.showSaveResult(TripDTO.Response.fromEntity(savedTrip));
+        tripView.showSaveResult(requestTripDTO.Response.fromEntity(savedTrip));
     }
 }

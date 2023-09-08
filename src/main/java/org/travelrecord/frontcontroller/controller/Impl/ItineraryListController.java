@@ -1,10 +1,10 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
 import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.ItineraryDTO;
-import org.travelrecord.dto.ResponseItineraryDTO;
-import org.travelrecord.dto.ResponseTripDTO;
-import org.travelrecord.dto.TripDTO;
+import org.travelrecord.dto.requestItineraryDTO;
+import org.travelrecord.Entity.ItineraryEntity;
+import org.travelrecord.Entity.TripEntity;
+import org.travelrecord.dto.requestTripDTO;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.ItineraryModelImpl;
 import org.travelrecord.model.Impl.TripModelImpl;
@@ -29,15 +29,15 @@ public class ItineraryListController implements Controller {
     @Override
     public void process() {
 
-        List<ResponseTripDTO> responseJSONTripDTOS = tripModel.JSONfindAll();
+        List<TripEntity> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
-                responseJSONTripDTOS.stream().map(TripDTO.Response::fromEntity).toList()
+                responseJSONTripDTOS.stream().map(requestTripDTO.Response::fromEntity).toList()
         );
 
         int tripId = itineraryView.getTripIdForItineraries();
 
         FileType type = itineraryView.chooseFileType();
-        List<ResponseItineraryDTO> itineraryList = null;
+        List<ItineraryEntity> itineraryList = null;
 
         if(type.equals(JSON)) {
             itineraryList = itineraryModel.findAllitineraryJsonByTripId(tripId);
@@ -45,8 +45,8 @@ public class ItineraryListController implements Controller {
             itineraryList = itineraryModel.findAllitineraryCsvByTripId(tripId);
         }
 
-        List<ItineraryDTO.Response> responseList = itineraryList.stream()
-                .map(ItineraryDTO.Response::fromEntity).collect(Collectors.toList());
+        List<requestItineraryDTO.Response> responseList = itineraryList.stream()
+                .map(requestItineraryDTO.Response::fromEntity).collect(Collectors.toList());
         itineraryView.showDtoList(responseList);
 
     }

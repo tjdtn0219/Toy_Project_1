@@ -1,9 +1,9 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
-import org.travelrecord.dto.ItineraryDTO;
-import org.travelrecord.dto.ResponseItineraryDTO;
-import org.travelrecord.dto.ResponseTripDTO;
-import org.travelrecord.dto.TripDTO;
+import org.travelrecord.dto.requestItineraryDTO;
+import org.travelrecord.Entity.ItineraryEntity;
+import org.travelrecord.Entity.TripEntity;
+import org.travelrecord.dto.requestTripDTO;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.ItineraryModelImpl;
 import org.travelrecord.model.Impl.TripModelImpl;
@@ -23,14 +23,14 @@ public class ItinerarySaveController implements Controller {
     @Override
     public void process() {
 
-        List<ResponseTripDTO> responseJSONTripDTOS = tripModel.JSONfindAll();
+        List<TripEntity> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
-                responseJSONTripDTOS.stream().map(TripDTO.Response::fromEntity).toList()
+                responseJSONTripDTOS.stream().map(requestTripDTO.Response::fromEntity).toList()
         );
 
-        ItineraryDTO.Request request = itineraryView.getDtoFromInput();
+        requestItineraryDTO.Request request = itineraryView.getDtoFromInput();
 
-        ResponseItineraryDTO responseItineraryDTO = ResponseItineraryDTO.builder()
+        ItineraryEntity itineraryEntity = itineraryEntity.builder()
                 .tripId(request.getTripId())
                 .departurePlace(request.getDeparturePlace())
                 .destination(request.getDestination())
@@ -40,11 +40,11 @@ public class ItinerarySaveController implements Controller {
                 .checkOutTime(request.getCheckOutTime())
                 .build();
 
-        ResponseItineraryDTO savedItinerary
-                = itineraryModel.save(request.getTripId(),responseItineraryDTO);
+        ItineraryEntity savedItinerary
+                = itineraryModel.save(request.getTripId(), itineraryEntity);
 
         itineraryView.showSaveResult(
-                ItineraryDTO.Response.fromEntity(savedItinerary)
+                requestItineraryDTO.Response.fromEntity(savedItinerary)
         );
     }
 }

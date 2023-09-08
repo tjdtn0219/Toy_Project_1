@@ -1,4 +1,4 @@
-package org.travelrecord.dto;
+package org.travelrecord.Entity;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ResponseItineraryDTO {
+public class ItineraryEntity {
 
     // id
     private Integer id;

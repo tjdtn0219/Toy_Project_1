@@ -1,10 +1,11 @@
 package org.travelrecord.dto;
 
 import lombok.*;
+import org.travelrecord.Entity.ItineraryEntity;
 
 import java.util.Date;
 
-public class ItineraryDTO {
+public class requestItineraryDTO {
 
     @Getter
     @Setter
@@ -45,16 +46,16 @@ public class ItineraryDTO {
         private Date arrivalTime;
         private Date checkInTime;
         private Date checkOutTime;
-        public static Response fromEntity(ResponseItineraryDTO responseItineraryDTO) {
+        public static Response fromEntity(ItineraryEntity itineraryEntity) {
             return Response.builder()
-                    .Id(responseItineraryDTO.getId())
-                    .tripId(responseItineraryDTO.getTripId())
-                    .departurePlace(responseItineraryDTO.getDeparturePlace())
-                    .destination(responseItineraryDTO.getDestination())
-                    .departureTime(responseItineraryDTO.getDepartureTime())
-                    .arrivalTime(responseItineraryDTO.getArrivalTime())
-                    .checkInTime(responseItineraryDTO.getCheckInTime())
-                    .checkOutTime(responseItineraryDTO.getCheckOutTime())
+                    .Id(itineraryEntity.getId())
+                    .tripId(itineraryEntity.getTripId())
+                    .departurePlace(itineraryEntity.getDeparturePlace())
+                    .destination(itineraryEntity.getDestination())
+                    .departureTime(itineraryEntity.getDepartureTime())
+                    .arrivalTime(itineraryEntity.getArrivalTime())
+                    .checkInTime(itineraryEntity.getCheckInTime())
+                    .checkOutTime(itineraryEntity.getCheckOutTime())
                     .build();
         }
     }

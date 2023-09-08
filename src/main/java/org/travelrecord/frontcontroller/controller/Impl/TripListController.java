@@ -1,8 +1,8 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
 import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.ResponseTripDTO;
-import org.travelrecord.dto.TripDTO;
+import org.travelrecord.Entity.TripEntity;
+import org.travelrecord.dto.requestTripDTO;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.ItineraryModelImpl;
 import org.travelrecord.model.Impl.TripModelImpl;
@@ -26,7 +26,7 @@ public class TripListController implements Controller {
     public void process() {
 
         FileType type = tripView.chooseFileType();
-        List<ResponseTripDTO> tripList = null;
+        List<TripEntity> tripList = null;
 
         if(type.equals(JSON)) {
             tripList = tripModel.JSONfindAll();
@@ -34,8 +34,8 @@ public class TripListController implements Controller {
             tripList = tripModel.CSVfindAll();
         }
 
-        List<TripDTO.Response> responseList = tripList.stream()
-                .map(TripDTO.Response::fromEntity).collect(Collectors.toList());
+        List<requestTripDTO.Response> responseList = tripList.stream()
+                .map(requestTripDTO.Response::fromEntity).collect(Collectors.toList());
         tripView.showDtoList(responseList);
 
     }

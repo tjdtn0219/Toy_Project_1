@@ -3,7 +3,7 @@ package org.travelrecord.model.Impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.travelrecord.dto.ResponseItineraryDTO;
+import org.travelrecord.Entity.ItineraryEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.travelrecord.model.Impl.util.LoadPath;
@@ -25,10 +25,10 @@ public class ItineraryModelImpl implements ItineraryModel {
         csvPath = loadPath.getCsvPath();
     }
 
-    public List<ResponseItineraryDTO> findAllitineraryJsonByTripId(int tripId) {
+    public List<ItineraryEntity> findAllitineraryJsonByTripId(int tripId) {
 
         itineraryJsonUtil itineraryJsonUtil = new itineraryJsonUtil();
-        List<ResponseItineraryDTO> itineraryDTO = new ArrayList<>();
+        List<ItineraryEntity> itineraryDTO = new ArrayList<>();
         String tripPath = baseFileName + tripId;
         File directory = new File(jsonPath);
         File[] files = directory.listFiles();
@@ -53,10 +53,10 @@ public class ItineraryModelImpl implements ItineraryModel {
 
     }
 
-    public List<ResponseItineraryDTO> findAllitineraryCsvByTripId(int tripId) {
+    public List<ItineraryEntity> findAllitineraryCsvByTripId(int tripId) {
 
         itineraryCsvUtil itineraryCsvUtil = new itineraryCsvUtil();
-        List<ResponseItineraryDTO> itineraryDTO = new ArrayList<>();
+        List<ItineraryEntity> itineraryDTO = new ArrayList<>();
         String tripPath = baseFileName + tripId;
         File directory = new File(jsonPath);
         File[] files = directory.listFiles();
@@ -83,9 +83,9 @@ public class ItineraryModelImpl implements ItineraryModel {
 
 
     @Override
-    public ResponseItineraryDTO save(Integer tripId, ResponseItineraryDTO responseItineraryDTO) {
+    public ItineraryEntity save(Integer tripId, ItineraryEntity itineraryEntity) {
         itineraryCsvUtil itineraryCsvUtil = new itineraryCsvUtil();
-        ResponseItineraryDTO savedResponseItineraryDTO = null;
+        ItineraryEntity savedItineraryEntity = null;
         try {
             // 폴더 경로 설정
             File jsonFolder = new File(jsonPath);
@@ -139,14 +139,14 @@ public class ItineraryModelImpl implements ItineraryModel {
                 JSONObject responseDTO = new JSONObject();
 
                 // 새로운 데이터를 JSONObject로 변환하여 추가
-                responseDTO.put("id", responseItineraryDTO.getId());
-                responseDTO.put("tripId", responseItineraryDTO.getTripId());
-                responseDTO.put("departurePlace", responseItineraryDTO.getDeparturePlace());
-                responseDTO.put("destination", responseItineraryDTO.getDestination());
-                responseDTO.put("departureTime", responseItineraryDTO.getDepartureTime());
-                responseDTO.put("arrivalTime", responseItineraryDTO.getArrivalTime());
-                responseDTO.put("checkInTime", responseItineraryDTO.getCheckInTime());
-                responseDTO.put("checkOutTime", responseItineraryDTO.getCheckOutTime());
+                responseDTO.put("id", itineraryEntity.getId());
+                responseDTO.put("tripId", itineraryEntity.getTripId());
+                responseDTO.put("departurePlace", itineraryEntity.getDeparturePlace());
+                responseDTO.put("destination", itineraryEntity.getDestination());
+                responseDTO.put("departureTime", itineraryEntity.getDepartureTime());
+                responseDTO.put("arrivalTime", itineraryEntity.getArrivalTime());
+                responseDTO.put("checkInTime", itineraryEntity.getCheckInTime());
+                responseDTO.put("checkOutTime", itineraryEntity.getCheckOutTime());
 
                 // 새로운 JSONObject를 JSON 배열에 추가
                 responseDTOArray.put(responseDTO);
@@ -156,7 +156,7 @@ public class ItineraryModelImpl implements ItineraryModel {
                     // 업데이트된 JSON 배열을 파일에 쓰기
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.writeValue(jsonFile, responseDTOArray.toString());
-                    savedResponseItineraryDTO = responseItineraryDTO;
+                    savedItineraryEntity = itineraryEntity;
 
 
 
@@ -165,10 +165,10 @@ public class ItineraryModelImpl implements ItineraryModel {
                 }
 
                 File csvFile = new File(csvtargetFolderPath, "MyItinerary.csv");
-                itineraryCsvUtil.writeCsvData(csvFile, responseItineraryDTO);
+                itineraryCsvUtil.writeCsvData(csvFile, itineraryEntity);
 
 
-                savedResponseItineraryDTO = responseItineraryDTO;
+                savedItineraryEntity = itineraryEntity;
 
             } else {
                 System.out.println("해당 tripId를 가진 폴더를 찾을 수 없습니다.");
@@ -177,7 +177,7 @@ public class ItineraryModelImpl implements ItineraryModel {
             e.printStackTrace();
         }
 
-        return savedResponseItineraryDTO;
+        return savedItineraryEntity;
     }
 
 

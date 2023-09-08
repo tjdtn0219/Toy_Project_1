@@ -1,14 +1,14 @@
 package org.travelrecord.model;
 
-import org.travelrecord.dto.ResponseTripDTO;
+import org.travelrecord.Entity.TripEntity;
 
 import java.util.List;
 
 public interface TripModel {
 
-    public ResponseTripDTO save(ResponseTripDTO responseTripDTO);
-    public List<ResponseTripDTO> JSONfindAll();
-    public List<ResponseTripDTO> CSVfindAll();
+    public TripEntity save(TripEntity tripEntity);
+    public List<TripEntity> JSONfindAll();
+    public List<TripEntity> CSVfindAll();
 
 
 

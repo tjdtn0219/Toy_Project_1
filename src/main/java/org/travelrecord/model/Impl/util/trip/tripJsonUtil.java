@@ -1,7 +1,7 @@
 package org.travelrecord.model.Impl.util.trip;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.travelrecord.dto.ResponseTripDTO;
+import org.travelrecord.Entity.TripEntity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class tripJsonUtil {
 
-    public List<ResponseTripDTO> findAllJsonFiles(String directoryPath) {
+    public List<TripEntity> findAllJsonFiles(String directoryPath) {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
@@ -21,7 +21,7 @@ public class tripJsonUtil {
         }
 
         File[] files = directory.listFiles();
-        List<ResponseTripDTO> tripList = new ArrayList<>();
+        List<TripEntity> tripList = new ArrayList<>();
         if (files != null) {
             for (File file : files) {
                 if (file.isDirectory()) {
@@ -29,7 +29,7 @@ public class tripJsonUtil {
 
                 } else if (file.isFile() && file.getName().startsWith("MyTrip_")) {
                     // JSON 파일인 경우 읽고 ResponseTripDTO로 파싱하여 리스트에 추가
-                    ResponseTripDTO tripDTO = readTripJsonFile(file);
+                    TripEntity tripDTO = readTripJsonFile(file);
                     tripList.add(tripDTO);
                     if (tripDTO != null) {
                         tripDTO.setDirPath(file.getParent());
@@ -40,23 +40,23 @@ public class tripJsonUtil {
         return tripList;
     }
 
-    public ResponseTripDTO readTripJsonFile(File file) {
+    public TripEntity readTripJsonFile(File file) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(file, ResponseTripDTO.class);
+            return objectMapper.readValue(file, TripEntity.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void saveDTOAsJson(String filePath, ResponseTripDTO responseTripDTO) {
+    public void saveDTOAsJson(String filePath, TripEntity tripEntity) {
         try {
             // Jackson ObjectMapper 초기화
             ObjectMapper objectMapper = new ObjectMapper();
 
             // DTO 객체를 JSON 문자열로 변환
-            String tripJson = objectMapper.writeValueAsString(responseTripDTO);
+            String tripJson = objectMapper.writeValueAsString(tripEntity);
 
             // JSON 파일로 저장
             try (FileWriter writer = new FileWriter(filePath)) {
