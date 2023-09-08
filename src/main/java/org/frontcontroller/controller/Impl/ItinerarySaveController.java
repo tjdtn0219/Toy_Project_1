@@ -1,11 +1,11 @@
 package org.frontcontroller.controller.Impl;
 
 import org.dto.ItineraryDTO;
+import org.dto.ResponseItineraryDTO;
 import org.dto.ResponseTripDTO;
 import org.dto.TripDTO;
 import org.frontcontroller.controller.Controller;
 import org.model.Impl.ItineraryModelImpl;
-import org.dto.ResponseItineraryDTO;
 import org.model.Impl.TripModelImpl;
 import org.model.TripModel;
 import org.view.ItineraryView;
@@ -22,9 +22,7 @@ public class ItinerarySaveController implements Controller {
     private TripView tripView = new TripView();
 
     @Override
-    public void process() throws ParseException {
-//        System.out.println("여정 기록");
-        //여행리스트 먼저 출력 -> 이후 뷰에서는 이 중 어떤 여행을 선택하시겠습니까 멘트 후 입력받은 숫자를 통해 해당 여행에 여정 기록
+    public void process() {
 
         List<ResponseTripDTO> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
@@ -43,8 +41,11 @@ public class ItinerarySaveController implements Controller {
                 .checkOutTime(request.getCheckOutTime())
                 .build();
 
-        ResponseItineraryDTO savedResponseItineraryDTO = itineraryModel.save(request.getTripId(),responseItineraryDTO);
+        ResponseItineraryDTO savedItinerary
+                = itineraryModel.save(request.getTripId(),responseItineraryDTO);
 
-        itineraryView.showSaveResult(ItineraryDTO.Response.fromEntity(savedResponseItineraryDTO));
+        itineraryView.showSaveResult(
+                ItineraryDTO.Response.fromEntity(savedItinerary)
+        );
     }
 }
