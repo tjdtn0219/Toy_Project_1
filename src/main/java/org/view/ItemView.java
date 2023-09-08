@@ -17,5 +17,7 @@ public interface ItemView<T, K> {
 
     public void showDtoList(List<K> dtoList);
 
+    public void showSaveResult(K dto);
+
     public String chooseFileType();
 }

@@ -1,5 +1,6 @@
 package org.frontcontroller.controller.Impl;
 
+import org.dto.ItineraryDTO;
 import org.dto.TripDTO;
 import org.frontcontroller.controller.Controller;
 import org.model.Impl.TripModelImpl;
@@ -29,11 +30,6 @@ public class TripSaveController implements Controller {
 
         ResponseTripDTO savedResponseTripDTO = tripModel.save(responseTripDTO);
 
-
-        System.out.println("**저장 내역**\n" + savedResponseTripDTO + "\n");
-
-       // System.out.println("**저장 내역**\n" + savedTrip + "\n");   //임시로 이렇게 설정함
-
-
+        tripView.showSaveResult(TripDTO.Response.fromEntity(savedResponseTripDTO));
     }
 }

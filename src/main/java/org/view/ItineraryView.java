@@ -29,6 +29,30 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
     }
 
     @Override
+    public void showSaveResult(ItineraryDTO.Response dto) {
+        String result = String.format(
+                "\n저장 완료!!\n" +
+                        "[여정기록정보 저장결과]\n" +
+                        "여정 ID: %s \n" +
+                        "여정 출발지: %s\n" +
+                        "여정 도착지: %s\n" +
+                        "여정 출발시간: %s\n" +
+                        "여정 도착시간: %s\n" +
+                        "여정 체크인시간: %s\n" +
+                        "여정 체크아웃시간: %s\n",
+                dto.getId(),
+                dto.getDeparturePlace(),
+                dto.getDestination(),
+                timeFormat.format(dto.getDepartureTime()),
+                timeFormat.format(dto.getArrivalTime()),
+                timeFormat.format(dto.getCheckInTime()),
+                timeFormat.format(dto.getCheckOutTime())
+        );
+
+        System.out.println(result);
+    }
+
+    @Override
     public String chooseFileType() {
         while (true) {
             try {
@@ -46,7 +70,7 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
 
     // 찾고 싶은 여정이 속해 있는 여행의 Id를 이용해서 여행을 조회
     public int getTripIdForItineraries() {
-        System.out.print("찾고 싶은 여정의 여행 Id를 입력하세요: ");
+        System.out.print("찾고 싶은 여정의 여행 ID를 입력하세요: ");
         return Integer.parseInt(sc.nextLine());
     }
 

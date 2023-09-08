@@ -43,8 +43,8 @@ public class ItinerarySaveController implements Controller {
                 .checkOutTime(request.getCheckOutTime())
                 .build();
 
-       ResponseItineraryDTO savedResponseItineraryDTO = itineraryModel.save(request.getTripId(),responseItineraryDTO);
+        ResponseItineraryDTO savedResponseItineraryDTO = itineraryModel.save(request.getTripId(),responseItineraryDTO);
 
-        System.out.println("**저장 내역**\n" + savedResponseItineraryDTO + "\n");
+        itineraryView.showSaveResult(ItineraryDTO.Response.fromEntity(savedResponseItineraryDTO));
     }
 }
