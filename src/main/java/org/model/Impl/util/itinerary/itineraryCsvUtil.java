@@ -45,7 +45,7 @@ public class itineraryCsvUtil {
 
                     responseItineraryDTOS.add(responseItineraryDTO);
 
-                    System.out.println(responseItineraryDTO.toString());
+
 
                 }
             }

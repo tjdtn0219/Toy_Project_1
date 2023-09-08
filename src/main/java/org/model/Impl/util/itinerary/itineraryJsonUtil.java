@@ -55,7 +55,7 @@ public class itineraryJsonUtil {
 
                     responseItineraryDTOS.add(responseItineraryDTO);
 
-                    System.out.println(responseItineraryDTO.toString());
+
                 }
             }
 
