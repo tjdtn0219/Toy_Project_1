@@ -74,7 +74,6 @@ public class TripModelImpl implements TripModel {
     public List<ResponseTripDTO> CSVfindAll() {
         tripCsvUtil tripCsvUtil = new tripCsvUtil();
         List<ResponseTripDTO> tripList = tripCsvUtil.findAllCsvFiles(csvPath);
-        System.out.println(tripList.toString());
         return tripList;
     }
     }

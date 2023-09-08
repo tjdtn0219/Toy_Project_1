@@ -45,7 +45,6 @@ public class tripCsvUtil {
             String line = reader.readLine();
             if (line != null) {
                 String[] data = line.split(",");
-                System.out.println(data.length);
                 if (data.length == 5) { // 필드 개수에 맞게 조정
                     ResponseTripDTO tripDTO = new ResponseTripDTO();
                     tripDTO.setId(Integer.parseInt(data[0].replaceAll("\\]", "").trim()));
