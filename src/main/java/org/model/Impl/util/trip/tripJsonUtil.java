@@ -62,7 +62,6 @@ public class tripJsonUtil {
             // JSON 파일로 저장
             try (FileWriter writer = new FileWriter(filePath)) {
                 writer.write(tripJson);
-                System.out.println("JSON 파일 저장 완료: " + filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
