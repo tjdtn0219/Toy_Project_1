@@ -5,6 +5,8 @@ import org.exception.ViewException;
 
 import java.util.Scanner;
 
+import static org.constant.ViewMessage.*;
+
 public class SelectOptionView {
     private final Scanner sc;
 
@@ -41,23 +43,10 @@ public class SelectOptionView {
     }
 
     private void displayServiceName() {
-        StringBuilder mainMenu = new StringBuilder();
-        mainMenu.append("---------------------------------------------------------------\n")
-                .append("           # 여행 여정을 기록과 관리하는 SNS 서비스 #         \n")
-                .append("---------------------------------------------------------------\n");
-
-        System.out.print(mainMenu);
+        System.out.print(SERVICE_NAME);
     }
 
     private void displayMenu() {
-        StringBuilder mainMenu = new StringBuilder();
-        mainMenu.append("---------------------------------------------------------------\n")
-                .append("                          메뉴리스트                           \n")
-                .append("---------------------------------------------------------------\n")
-                .append("  여행기록(1), 여정기록(2), 여행조회(3), 여정조회(4), 종료(5)  \n")
-                .append("---------------------------------------------------------------\n")
-                .append("  시작하려면 메뉴 번호를 입력하세요: ");
-
-        System.out.print(mainMenu);
+        System.out.print(MAIN_MENU);
     }
 }
