@@ -32,7 +32,6 @@ public class tripFolderUtil {
         File folder = new File(path + File.separator + folderName);
         if (!folder.exists()) {
             folder.mkdir();
-            System.out.println("폴더가 생성되었습니다: " + folder.getPath());
         } else {
             System.out.println("이미 폴더가 생성되어 있습니다: " + folder.getPath());
         }
