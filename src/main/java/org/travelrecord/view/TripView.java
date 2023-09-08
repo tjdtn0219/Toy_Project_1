@@ -1,7 +1,8 @@
 package org.travelrecord.view;
 
 import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.requestTripDTO;
+import org.travelrecord.dto.TripRequestDto;
+import org.travelrecord.dto.TripResponseDto;
 import org.travelrecord.exception.ViewErrorCode;
 import org.travelrecord.exception.ViewException;
 
@@ -9,24 +10,25 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import static org.travelrecord.constant.ViewMessage.*;
+import static org.travelrecord.constant.ViewMessage.TRIP_SAVE_RESULT;
+import static org.travelrecord.constant.ViewMessage.TRIP_SEARCH_RESULT;
 
-public class TripView implements ItemView<requestTripDTO.Request, requestTripDTO.Response> {
+public class TripView implements ItemView<TripRequestDto, TripResponseDto> {
 
     @Override
-    public requestTripDTO.Request getDtoFromInput() {
+    public TripRequestDto getDtoFromInput() {
         System.out.println("기록할 여행 정보를 입력 하세요.\n");
         while (true) {
             try {
-                requestTripDTO.Request request = getRequest();
-                return request;
+                TripRequestDto tripRequestDto = getRequest();
+                return tripRequestDto;
             } catch (ViewException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private static requestTripDTO.Request getRequest() {
+    private static TripRequestDto getRequest() {
         String tripName;
         Date startDate;
         Date endDate;
@@ -39,7 +41,7 @@ public class TripView implements ItemView<requestTripDTO.Request, requestTripDTO
             System.out.print("여행 종료 날짜를 입력 하세요 (YYYY-MM-DD): ");
             endDate = dateFormat.parse(sc.nextLine());
 
-            return requestTripDTO.Request.builder()
+            return TripRequestDto.builder()
                     .tripName(tripName)
                     .startDate(startDate)
                     .endDate(endDate)
@@ -50,12 +52,12 @@ public class TripView implements ItemView<requestTripDTO.Request, requestTripDTO
     }
 
     @Override
-    public void showDtoList(List<requestTripDTO.Response> tripDtoList) {
+    public void showDtoList(List<TripResponseDto> tripDtoList) {
         tripDtoList.forEach(this::showTripTable);
     }
 
     @Override
-    public void showSaveResult(requestTripDTO.Response dto) {
+    public void showSaveResult(TripResponseDto dto) {
         String result = String.format(
                 TRIP_SAVE_RESULT,
                 dto.getTripName(),
@@ -84,7 +86,7 @@ public class TripView implements ItemView<requestTripDTO.Request, requestTripDTO
         }
     }
 
-    private void showTripTable(requestTripDTO.Response trip) {
+    private void showTripTable(TripResponseDto trip) {
         String result = String.format(
                 TRIP_SEARCH_RESULT,
                 trip.getId(),

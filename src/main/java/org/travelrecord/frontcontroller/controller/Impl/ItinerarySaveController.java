@@ -1,9 +1,10 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
-import org.travelrecord.dto.requestItineraryDTO;
 import org.travelrecord.Entity.ItineraryEntity;
 import org.travelrecord.Entity.TripEntity;
-import org.travelrecord.dto.requestTripDTO;
+import org.travelrecord.dto.ItineraryRequestDto;
+import org.travelrecord.dto.ItineraryResponseDto;
+import org.travelrecord.dto.TripResponseDto;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.ItineraryModelImpl;
 import org.travelrecord.model.Impl.TripModelImpl;
@@ -25,26 +26,26 @@ public class ItinerarySaveController implements Controller {
 
         List<TripEntity> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
-                responseJSONTripDTOS.stream().map(requestTripDTO.Response::fromEntity).toList()
+                responseJSONTripDTOS.stream().map(TripResponseDto::fromEntity).toList()
         );
 
-        requestItineraryDTO.Request request = itineraryView.getDtoFromInput();
+        ItineraryRequestDto itineraryRequestDto = itineraryView.getDtoFromInput();
 
-        ItineraryEntity itineraryEntity = itineraryEntity.builder()
-                .tripId(request.getTripId())
-                .departurePlace(request.getDeparturePlace())
-                .destination(request.getDestination())
-                .departureTime(request.getDepartureTime())
-                .arrivalTime(request.getArrivalTime())
-                .checkInTime(request.getCheckInTime())
-                .checkOutTime(request.getCheckOutTime())
+        ItineraryEntity itineraryEntity = ItineraryEntity.builder()
+                .tripId(itineraryRequestDto.getTripId())
+                .departurePlace(itineraryRequestDto.getDeparturePlace())
+                .destination(itineraryRequestDto.getDestination())
+                .departureTime(itineraryRequestDto.getDepartureTime())
+                .arrivalTime(itineraryRequestDto.getArrivalTime())
+                .checkInTime(itineraryRequestDto.getCheckInTime())
+                .checkOutTime(itineraryRequestDto.getCheckOutTime())
                 .build();
 
         ItineraryEntity savedItinerary
-                = itineraryModel.save(request.getTripId(), itineraryEntity);
+                = itineraryModel.save(itineraryRequestDto.getTripId(), itineraryEntity);
 
         itineraryView.showSaveResult(
-                requestItineraryDTO.Response.fromEntity(savedItinerary)
+                ItineraryResponseDto.fromEntity(savedItinerary)
         );
     }
 }

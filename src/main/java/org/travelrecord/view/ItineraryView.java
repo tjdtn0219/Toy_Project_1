@@ -1,7 +1,8 @@
 package org.travelrecord.view;
 
 import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.requestItineraryDTO;
+import org.travelrecord.dto.ItineraryRequestDto;
+import org.travelrecord.dto.ItineraryResponseDto;
 import org.travelrecord.exception.ViewErrorCode;
 import org.travelrecord.exception.ViewException;
 
@@ -9,12 +10,13 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import static org.travelrecord.constant.ViewMessage.*;
+import static org.travelrecord.constant.ViewMessage.ITINERARY_SAVE_RESULT;
+import static org.travelrecord.constant.ViewMessage.ITINERARY_SEARCH_RESULT;
 
-public class ItineraryView implements ItemView<requestItineraryDTO.Request, requestItineraryDTO.Response> {
+public class ItineraryView implements ItemView<ItineraryRequestDto, ItineraryResponseDto> {
 
     @Override
-    public requestItineraryDTO.Request getDtoFromInput() {
+    public ItineraryRequestDto getDtoFromInput() {
         System.out.println("기록할 여정 정보를 입력 하세요.\n");
         while (true) {
             try {
@@ -27,12 +29,12 @@ public class ItineraryView implements ItemView<requestItineraryDTO.Request, requ
     }
 
     @Override
-    public void showDtoList(List<requestItineraryDTO.Response> itineraryDtoList) {
+    public void showDtoList(List<ItineraryResponseDto> itineraryDtoList) {
         itineraryDtoList.forEach(this::showItineraryTable);
     }
 
     @Override
-    public void showSaveResult(requestItineraryDTO.Response dto) {
+    public void showSaveResult(ItineraryResponseDto dto) {
         String result = String.format(
                 ITINERARY_SAVE_RESULT,
                 dto.getDeparturePlace(),
@@ -71,7 +73,7 @@ public class ItineraryView implements ItemView<requestItineraryDTO.Request, requ
         return Integer.parseInt(sc.nextLine());
     }
 
-    private requestItineraryDTO.Request getRequest(int tripId) {
+    private ItineraryRequestDto getRequest(int tripId) {
         String departurePlace;
         String destination;
         Date departureTime;
@@ -96,7 +98,7 @@ public class ItineraryView implements ItemView<requestItineraryDTO.Request, requ
             throw new ViewException(ViewErrorCode.NOT_MATCHED_TIME_FORMAT);
         }
 
-        return requestItineraryDTO.Request.builder()
+        return ItineraryRequestDto.builder()
                 .tripId(tripId)
                 .departurePlace(departurePlace)
                 .destination(destination)
@@ -118,16 +120,16 @@ public class ItineraryView implements ItemView<requestItineraryDTO.Request, requ
         }
     }
 
-    private void showItineraryTable(requestItineraryDTO.Response response) {
+    private void showItineraryTable(ItineraryResponseDto itineraryResponseDto) {
         String result = String.format(
                 ITINERARY_SEARCH_RESULT,
-                response.getId(),
-                response.getDeparturePlace(),
-                response.getDestination(),
-                timeFormat.format(response.getDepartureTime()),
-                timeFormat.format(response.getArrivalTime()),
-                timeFormat.format(response.getCheckInTime()),
-                timeFormat.format(response.getCheckOutTime())
+                itineraryResponseDto.getId(),
+                itineraryResponseDto.getDeparturePlace(),
+                itineraryResponseDto.getDestination(),
+                timeFormat.format(itineraryResponseDto.getDepartureTime()),
+                timeFormat.format(itineraryResponseDto.getArrivalTime()),
+                timeFormat.format(itineraryResponseDto.getCheckInTime()),
+                timeFormat.format(itineraryResponseDto.getCheckOutTime())
         );
 
         System.out.println(result);

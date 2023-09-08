@@ -1,10 +1,10 @@
 package org.travelrecord.frontcontroller.controller.Impl;
 
-import org.travelrecord.constant.FileType;
-import org.travelrecord.dto.requestItineraryDTO;
 import org.travelrecord.Entity.ItineraryEntity;
 import org.travelrecord.Entity.TripEntity;
-import org.travelrecord.dto.requestTripDTO;
+import org.travelrecord.constant.FileType;
+import org.travelrecord.dto.ItineraryResponseDto;
+import org.travelrecord.dto.TripResponseDto;
 import org.travelrecord.frontcontroller.controller.Controller;
 import org.travelrecord.model.Impl.ItineraryModelImpl;
 import org.travelrecord.model.Impl.TripModelImpl;
@@ -31,7 +31,7 @@ public class ItineraryListController implements Controller {
 
         List<TripEntity> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
-                responseJSONTripDTOS.stream().map(requestTripDTO.Response::fromEntity).toList()
+                responseJSONTripDTOS.stream().map(TripResponseDto::fromEntity).toList()
         );
 
         int tripId = itineraryView.getTripIdForItineraries();
@@ -45,9 +45,9 @@ public class ItineraryListController implements Controller {
             itineraryList = itineraryModel.findAllitineraryCsvByTripId(tripId);
         }
 
-        List<requestItineraryDTO.Response> responseList = itineraryList.stream()
-                .map(requestItineraryDTO.Response::fromEntity).collect(Collectors.toList());
-        itineraryView.showDtoList(responseList);
+        List<ItineraryResponseDto> itineraryResponseDtoList = itineraryList.stream()
+                .map(ItineraryResponseDto::fromEntity).collect(Collectors.toList());
+        itineraryView.showDtoList(itineraryResponseDtoList);
 
     }
 }
