@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.model.Impl.util.LoadPath;
 import org.model.Impl.util.itinerary.itineraryCsvUtil;
 import org.model.Impl.util.itinerary.itineraryJsonUtil;
 import org.model.ItineraryModel;
@@ -17,10 +18,15 @@ import java.util.*;
 
 public class ItineraryModelImpl implements ItineraryModel {
     String baseFileName = "MyTrip_"; // Unique identifier
-    String jsonPath = "src\\JSON"; //폴더 경로
-    String csvPath = "src\\CSV"; //폴더 경로
-    //C:\Users\s_sja\IdeaProjects\Toy-Project
 
+    String jsonPath, csvPath;
+
+    public ItineraryModelImpl() {
+        LoadPath loadPath = new LoadPath();
+        // 파일 경로 값 properties 에서 가져와 적용
+        jsonPath = loadPath.getJsonPath();
+        csvPath = loadPath.getCsvPath();
+    }
 
     public List<ResponseItineraryDTO> findAllitineraryJsonByTripId(int tripId) {
 
@@ -84,11 +90,9 @@ public class ItineraryModelImpl implements ItineraryModel {
         itineraryCsvUtil itineraryCsvUtil = new itineraryCsvUtil();
         ResponseItineraryDTO savedResponseItineraryDTO = null;
         try {
-            // JSON 폴더 경로 설정
-            String jsonFolderPath = "C:\\Users\\82102\\Desktop\\JSON";
-            String csvFolderPath = "C:\\Users\\82102\\Desktop\\CSV";
-            File jsonFolder = new File(jsonFolderPath);
-            File csvFolder = new File(csvFolderPath);
+            // 폴더 경로 설정
+            File jsonFolder = new File(jsonPath);
+            File csvFolder = new File(csvPath);
 
             // JSON 폴더 내의 모든 폴더를 가져옴
             File[] subjsonFolders = jsonFolder.listFiles(File::isDirectory);
