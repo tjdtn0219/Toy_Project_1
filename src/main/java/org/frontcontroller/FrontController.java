@@ -1,5 +1,6 @@
 package org.frontcontroller;
 
+import org.constant.MenuOption;
 import org.frontcontroller.controller.*;
 import org.frontcontroller.controller.Impl.*;
 import org.frontcontroller.controller.Impl.TripListController;
@@ -8,9 +9,11 @@ import org.view.SelectOptionView;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.constant.MenuOption.*;
+
 public class FrontController {
 
-    private Map<Integer, Controller> controllerMap;
+    private Map<MenuOption, Controller> controllerMap;
 
     public FrontController() {
         controllerMap = new HashMap<>();
@@ -18,21 +21,21 @@ public class FrontController {
     }
 
     private void initControllerMap() {
-        controllerMap.put(1, new TripSaveController());
-        controllerMap.put(2, new ItinerarySaveController());
-        controllerMap.put(3, new TripListController());
-        controllerMap.put(4, new ItineraryListController());
-        controllerMap.put(5, new TerminateController());
+        controllerMap.put(TRIP_SAVE, new TripSaveController());
+        controllerMap.put(ITINERARY_SAVE, new ItinerarySaveController());
+        controllerMap.put(TRIP_LIST, new TripListController());
+        controllerMap.put(ITINERARY_LIST, new ItineraryListController());
+        controllerMap.put(TERMINATE, new TerminateController());
     }
 
     public void service() throws Exception {
         SelectOptionView selectOptionView = new SelectOptionView();
         int input = selectOptionView.receiveInput();
 
-        Controller controller = controllerMap.get(input);
+        Controller controller = controllerMap.get(MenuOption.of(input));
 
         if(controller==null) {
-            //예외 처리 예정
+            
             return ;
         }
 
