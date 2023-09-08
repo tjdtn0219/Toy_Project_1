@@ -172,7 +172,7 @@ public class ItineraryModelImpl implements ItineraryModel {
 
 
                 savedResponseItineraryDTO = responseItineraryDTO;
-                System.out.println("CSV 여정 저장 완료: " + csvFile.getPath());
+
             } else {
                 System.out.println("해당 tripId를 가진 폴더를 찾을 수 없습니다.");
             }
