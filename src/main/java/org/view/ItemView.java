@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
-public interface ItemView<T,K> {
+public interface ItemView<T, K> {
 
     public final Scanner sc = new Scanner(System.in);
 
@@ -16,4 +16,6 @@ public interface ItemView<T,K> {
     public T getDtoFromInput() throws ParseException;
 
     public void showDtoList(List<K> dtoList);
+
+    public String chooseFileType();
 }

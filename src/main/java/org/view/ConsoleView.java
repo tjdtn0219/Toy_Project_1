@@ -1,13 +1,5 @@
 package org.view;
 
-import org.dto.ItineraryDTO;
-import org.dto.TripDTO;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleView {
@@ -23,10 +15,4 @@ public class ConsoleView {
         String input = sc.nextLine();
         return "Y".equals(input);
     }
-
-    public String chooseFileType() {
-        System.out.print("파일 타입을 고르세요(JSON, CSV) : ");
-        return sc.nextLine();
-    }
-
 }
