@@ -1,5 +1,7 @@
 package org.view;
 
+import org.constant.FileType;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,5 +21,5 @@ public interface ItemView<T, K> {
 
     public void showSaveResult(K dto);
 
-    public String chooseFileType();
+    public FileType chooseFileType();
 }

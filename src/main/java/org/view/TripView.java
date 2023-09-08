@@ -1,5 +1,6 @@
 package org.view;
 
+import org.constant.FileType;
 import org.dto.TripDTO;
 import org.exception.ViewErrorCode;
 import org.exception.ViewException;
@@ -69,15 +70,17 @@ public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
     }
 
     @Override
-    public String chooseFileType() {
+    public FileType chooseFileType() {
         while (true) {
             try {
-                System.out.print("파일 타입을 고르세요(JSON, CSV) : ");
+                System.out.print("\n파일 타입을 고르세요(JSON, CSV) : ");
                 String fileType = sc.nextLine();
-                if (!fileType.equals("JSON") && !fileType.equals("CSV")) {
-                    throw new ViewException(ViewErrorCode.NOT_MATCHED_FILETYPE);
+                if(fileType.equals(FileType.JSON.toString())) {
+                    return FileType.JSON;
+                } else if (fileType.equals(FileType.CSV.toString())) {
+                    return FileType.CSV;
                 }
-                return fileType;
+                throw new ViewException(ViewErrorCode.NOT_MATCHED_FILETYPE);
             } catch (ViewException e) {
                 System.out.println(e.getMessage());
             }

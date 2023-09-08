@@ -1,5 +1,6 @@
 package org.view;
 
+import org.constant.FileType;
 import org.dto.ItineraryDTO;
 import org.exception.ViewErrorCode;
 import org.exception.ViewException;
@@ -53,15 +54,17 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
     }
 
     @Override
-    public String chooseFileType() {
+    public FileType chooseFileType() {
         while (true) {
             try {
-                System.out.print("파일 타입을 고르세요(JSON, CSV) : ");
+                System.out.print("\n파일 타입을 고르세요(JSON, CSV) : ");
                 String fileType = sc.nextLine();
-                if (!fileType.equals("JSON") && !fileType.equals("CSV")) {
-                    throw new ViewException(ViewErrorCode.NOT_MATCHED_FILETYPE);
+                if(fileType.equals(FileType.JSON.toString())) {
+                    return FileType.JSON;
+                } else if (fileType.equals(FileType.CSV.toString())) {
+                    return FileType.CSV;
                 }
-                return fileType;
+                throw new ViewException(ViewErrorCode.NOT_MATCHED_FILETYPE);
             } catch (ViewException e) {
                 System.out.println(e.getMessage());
             }
@@ -87,13 +90,13 @@ public class ItineraryView implements ItemView<ItineraryDTO.Request, ItineraryDT
         System.out.print("여정 도착지를 입력하세요: ");
         destination = sc.nextLine();
         try {
-            System.out.print("여정 시작시간을 입력하세요: ");
+            System.out.print("여정 시작시간을 입력하세요 (YYYY-MM-DD hh:mm): ");
             departureTime = timeFormat.parse(sc.nextLine());
-            System.out.print("여정 도착시간을 입력하세요: ");
+            System.out.print("여정 도착시간을 입력하세요 (YYYY-MM-DD hh:mm): ");
             arrivalTime = timeFormat.parse(sc.nextLine());
-            System.out.print("여정 체크인 시간을 입력하세요: ");
+            System.out.print("여정 체크인 시간을 입력하세요 (YYYY-MM-DD hh:mm): ");
             checkInTime = timeFormat.parse(sc.nextLine());
-            System.out.print("여정 체크아웃 시간을 입력하세요: ");
+            System.out.print("여정 체크아웃 시간을 입력하세요 (YYYY-MM-DD hh:mm): ");
             checkOutTime = timeFormat.parse(sc.nextLine());
         } catch (ParseException e) {
             throw new ViewException(ViewErrorCode.NOT_MATCHED_TIME_FORMAT);
