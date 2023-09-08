@@ -139,7 +139,7 @@ public class ItineraryModelImpl implements ItineraryModel {
                 JSONObject responseDTO = new JSONObject();
 
                 // 새로운 데이터를 JSONObject로 변환하여 추가
-                responseDTO.put("id", itineraryEntity.getId());
+                responseDTO.put("id", responseDTOArray.length() + 1);
                 responseDTO.put("tripId", itineraryEntity.getTripId());
                 responseDTO.put("departurePlace", itineraryEntity.getDeparturePlace());
                 responseDTO.put("destination", itineraryEntity.getDestination());
