@@ -1,6 +1,8 @@
 package org.frontcontroller;
 
 import org.constant.MenuOption;
+import org.exception.ControllerErrorCode;
+import org.exception.ControllerException;
 import org.frontcontroller.controller.*;
 import org.frontcontroller.controller.Impl.*;
 import org.frontcontroller.controller.Impl.TripListController;
@@ -10,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.constant.MenuOption.*;
+import static org.exception.ControllerErrorCode.CONTROLLER_NOT_FOUND;
 
 public class FrontController {
 
@@ -35,8 +38,7 @@ public class FrontController {
         Controller controller = controllerMap.get(MenuOption.of(input));
 
         if(controller==null) {
-            
-            return ;
+            throw new ControllerException(CONTROLLER_NOT_FOUND);
         }
 
         controller.process();
