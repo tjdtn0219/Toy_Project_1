@@ -1,11 +1,12 @@
 package org.frontcontroller.controller.Impl;
 
+import org.constant.FileType;
 import org.dto.ItineraryDTO;
+import org.dto.ResponseItineraryDTO;
 import org.dto.ResponseTripDTO;
 import org.dto.TripDTO;
 import org.frontcontroller.controller.Controller;
 import org.model.Impl.ItineraryModelImpl;
-import org.dto.ResponseItineraryDTO;
 import org.model.Impl.TripModelImpl;
 import org.model.ItineraryModel;
 import org.model.TripModel;
@@ -13,6 +14,10 @@ import org.view.ItineraryView;
 import org.view.TripView;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.constant.FileType.CSV;
+import static org.constant.FileType.JSON;
 
 public class ItineraryListController implements Controller {
 
@@ -23,28 +28,26 @@ public class ItineraryListController implements Controller {
 
     @Override
     public void process() {
-//        System.out.println("여정 조회");
 
         List<ResponseTripDTO> responseJSONTripDTOS = tripModel.JSONfindAll();
         tripView.showDtoList(
                 responseJSONTripDTOS.stream().map(TripDTO.Response::fromEntity).toList()
         );
 
-        int tripId = itineraryView.getTripIdForItineraries(); //찾을 여정 이전에 여행 번호 먼저 입력
+        int tripId = itineraryView.getTripIdForItineraries();
 
-        // 폴더에 있는 모든 여행리스트를 가져옴,필요에 따라 JSON,CSV파일 받아서 해당 메소드들 호출해주시면 됩니다.
-        //  List<ResponseItineraryDTO> jsonItineraries = itineraryModel.findAllitineraryJsonByTripId(tripId);
-        // CSV값 들어오면 해당 메소드 출력
-        List<ResponseItineraryDTO> csvItineraries = itineraryModel.findAllitineraryCsvByTripId(tripId);
+        FileType type = itineraryView.chooseFileType();
+        List<ResponseItineraryDTO> itineraryList = null;
 
-      /**  List<ItineraryDTO.Response> jsonResponseList = jsonItineraries.stream()
-                .map(ItineraryDTO.Response::fromEntity).toList();
-        itineraryView.showDtoList(jsonResponseList);**/
+        if(type.equals(JSON)) {
+            itineraryList = itineraryModel.findAllitineraryJsonByTripId(tripId);
+        } else if(type.equals(CSV)) {
+            itineraryList = itineraryModel.findAllitineraryCsvByTripId(tripId);
+        }
 
-
-        List<ItineraryDTO.Response> csvResponseList = csvItineraries.stream()
-                .map(ItineraryDTO.Response::fromEntity).toList();
-        itineraryView.showDtoList(csvResponseList);
+        List<ItineraryDTO.Response> responseList = itineraryList.stream()
+                .map(ItineraryDTO.Response::fromEntity).collect(Collectors.toList());
+        itineraryView.showDtoList(responseList);
 
     }
 }

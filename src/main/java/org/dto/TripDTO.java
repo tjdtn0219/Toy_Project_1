@@ -40,7 +40,6 @@ public class TripDTO {
                     .tripName(responseTripDTO.getTripName())
                     .startDate(responseTripDTO.getStartDate())
                     .endDate(responseTripDTO.getEndDate())
-//                    .itineraries()
                     .build();
         }
     }
