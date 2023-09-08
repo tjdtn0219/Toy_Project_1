@@ -52,6 +52,23 @@ public class TripView implements ItemView<TripDTO.Request, TripDTO.Response> {
     }
 
     @Override
+    public void showSaveResult(TripDTO.Response dto) {
+        String result = String.format(
+                "\n저장 완료!!\n" +
+                        "[여행기록정보 저장결과]\n" +
+                        "여행 ID: %s \n" +
+                        "여행 이름: %s\n" +
+                        "여행 출발날짜: %s\n" +
+                        "여행 도착날짜: %s\n",
+                dto.getId(),
+                dto.getTripName(),
+                dateFormat.format(dto.getStartDate()),
+                dateFormat.format(dto.getEndDate())
+        );
+        System.out.println(result);
+    }
+
+    @Override
     public String chooseFileType() {
         while (true) {
             try {
