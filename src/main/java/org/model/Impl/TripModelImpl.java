@@ -2,6 +2,7 @@ package org.model.Impl;
 
 
 import org.dto.ResponseTripDTO;
+import org.model.Impl.util.LoadPath;
 import org.model.Impl.util.trip.tripCsvUtil;
 import org.model.Impl.util.trip.tripFolderUtil;
 import org.model.Impl.util.trip.tripJsonUtil;
@@ -15,8 +16,15 @@ public class TripModelImpl implements TripModel {
     String baseFileName = "MyTrip_"; // Unique identifier
     String jsonfileExtension = ".json"; // json파일 확장자
     String csvfileExtension = ".csv"; // csv파일 확장자
-    String jsonPath = "src\\JSON"; //폴더 경로
-    String csvPath = "src\\CSV"; //폴더 경로
+
+    String jsonPath, csvPath;
+
+    public TripModelImpl() {
+        LoadPath loadPath = new LoadPath();
+        // 파일 경로 값 properties 에서 가져와 적용
+        jsonPath = loadPath.getJsonPath();
+        csvPath = loadPath.getCsvPath();
+    }
 
     public ResponseTripDTO save(ResponseTripDTO responseTripDTO) {
         try {
@@ -35,7 +43,6 @@ public class TripModelImpl implements TripModel {
 
             // JSON 폴더 생성
             tripFolderUtil.createFolderIfNotExists(jsonPath, jsonFolderName);
-
 
             String jsonFilePath = jsonPath + File.separator + jsonFolderName + File.separator + jsonFolderName + jsonfileExtension;
             String csvFilePath = csvPath + File.separator + csvFolderName + File.separator + csvFolderName + csvfileExtension;
